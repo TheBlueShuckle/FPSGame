@@ -13,6 +13,7 @@ public class PlayerMotor : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
     private bool isCrouched;
+    private bool isSprinting;
     public float speed;
     public float gravity;
     public float jumpHeight;
@@ -45,7 +46,20 @@ public class PlayerMotor : MonoBehaviour
             velocity.y = -2;
         }
 
-        speed = isCrouched ? DefaultSpeed / 3 : DefaultSpeed;
+        if (isCrouched)
+        {
+            speed = DefaultSpeed / 3;
+        }
+
+        else if (isSprinting)
+        {
+            speed = DefaultSpeed * 1.5f;
+        }
+
+        else
+        {
+            speed = DefaultSpeed;
+        }
 
         controller.Move(velocity * Time.deltaTime);
     }
@@ -61,5 +75,10 @@ public class PlayerMotor : MonoBehaviour
     public void ToggleCrouch()
     {
         isCrouched = !isCrouched;
+    }
+
+    public void ToggleSprint()
+    {
+        isSprinting = !isSprinting;
     }
 }
