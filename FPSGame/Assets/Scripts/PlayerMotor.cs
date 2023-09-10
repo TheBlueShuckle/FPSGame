@@ -75,10 +75,12 @@ public class PlayerMotor : MonoBehaviour
     public void ToggleCrouch()
     {
         isCrouched = !isCrouched;
+        Debug.Log("Toggled Crouching");
     }
 
     public void ToggleSprint()
     {
         isSprinting = !isSprinting;
+        Debug.Log("Toggled Sprinting");
     }
 }
