@@ -12,6 +12,8 @@ public class InputManager : MonoBehaviour
     private PlayerMotor motor;
     private PlayerLook look;
 
+    public bool isSprinting;
+
     void Awake()
     {
         playerInput = new PlayerInput();
@@ -22,7 +24,8 @@ public class InputManager : MonoBehaviour
 
         onFoot.Jump.performed += ctx => motor.Jump();
         onFoot.Crouch.performed += ctx => motor.ToggleCrouch();
-        onFoot.Sprint.performed += ctx => motor.ToggleSprint();
+        onFoot.SprintStart.performed += ctx => motor.SprintingPressed();
+        onFoot.SprintStop.performed += ctx => motor.SprintingReleased();
     }
 
     void FixedUpdate()
@@ -35,6 +38,8 @@ public class InputManager : MonoBehaviour
         look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
     }
 
+    #region - Enable / Disable -
+
     private void OnEnable()
     {
         onFoot.Enable();
@@ -44,4 +49,6 @@ public class InputManager : MonoBehaviour
     {
         onFoot.Disable();
     }
+
+    #endregion
 }

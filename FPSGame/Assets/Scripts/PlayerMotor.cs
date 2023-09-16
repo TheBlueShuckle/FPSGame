@@ -7,24 +7,25 @@ using UnityEngine;
 
 public class PlayerMotor : MonoBehaviour
 {
-    [SerializeField] const float DefaultSpeed = 5f;
-
-    private CharacterController controller;
-    private Vector3 velocity;
-    private bool isGrounded;
-    private bool isCrouched;
-    private bool isSprinting;
-    public float speed;
+    public float defaultSpeed;
     public float gravity;
     public float jumpHeight;
 
-    // Start is called before the first frame update
+    private CharacterController controller;
+    private Vector3 velocity;
+
+    private float speed;
+
+    private bool isGrounded;
+    private bool isCrouched;
+    private bool isSprinting;
+
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         isGrounded = controller.isGrounded;
@@ -37,28 +38,28 @@ public class PlayerMotor : MonoBehaviour
         moveDirection.x = input.x;
         moveDirection.z = input.y;
 
-        controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
-
-        velocity.y += gravity * Time.deltaTime;
-
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2;
-        }
-
         if (isCrouched)
         {
-            speed = DefaultSpeed / 3;
+            speed = defaultSpeed / 3f;
         }
 
         else if (isSprinting)
         {
-            speed = DefaultSpeed * 1.5f;
+            speed = defaultSpeed * 1.5f;
         }
 
         else
         {
-            speed = DefaultSpeed;
+            speed = defaultSpeed;
+        }
+
+        controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
+
+        velocity.y += gravity * Time.deltaTime;
+
+        if (isGrounded && velocity.y < 0f)
+        {
+            velocity.y = -2f;
         }
 
         controller.Move(velocity * Time.deltaTime);
@@ -78,9 +79,15 @@ public class PlayerMotor : MonoBehaviour
         Debug.Log("Toggled Crouching");
     }
 
-    public void ToggleSprint()
+    public void SprintingPressed()
     {
-        isSprinting = !isSprinting;
-        Debug.Log("Toggled Sprinting");
+        isSprinting = true;
+        Debug.Log("Started sprinting");
+    }
+
+    public void SprintingReleased()
+    {
+        isSprinting = false;
+        Debug.Log("Stopped sprinting");
     }
 }
