@@ -351,6 +351,7 @@
 "Assets/Scripts/InputManager.cs"
 "Assets/Scripts/PlayerLook.cs"
 "Assets/Scripts/PlayerMotor.cs"
+"Assets/Teleport.cs"
 -langversion:9.0
 
 /deterministic
