@@ -10,6 +10,8 @@ public class PlayerMotor : MonoBehaviour
     public float defaultSpeed;
     public float gravity;
     public float jumpHeight;
+    public bool lerpCrouch;
+    public float crouchTimer;
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -29,6 +31,29 @@ public class PlayerMotor : MonoBehaviour
     void Update()
     {
         isGrounded = controller.isGrounded;
+
+        if (lerpCrouch)
+        {
+            crouchTimer += Time.deltaTime;
+            float p = crouchTimer / 1;
+            p *= p;
+
+            if (isCrouched)
+            {
+                controller.height = Mathf.Lerp(controller.height, 1, p);
+            }
+
+            else
+            {
+                controller.height = Mathf.Lerp(controller.height, 2, p);
+            }
+
+            if (p > 1)
+            {
+                lerpCrouch = false;
+                crouchTimer = 0;
+            }
+        }
     }
 
     //receive inputs for inputmanager and apply them to the character controller
@@ -45,7 +70,7 @@ public class PlayerMotor : MonoBehaviour
 
         else if (isSprinting)
         {
-            speed = defaultSpeed * 1.5f;
+            speed = defaultSpeed * 2f;
         }
 
         else
@@ -73,19 +98,22 @@ public class PlayerMotor : MonoBehaviour
         }
     }
 
-    public void ToggleCrouch()
+    public void Crouch()
     {
         isCrouched = !isCrouched;
+        crouchTimer = 0;
+        lerpCrouch = true;
+
         Debug.Log("Toggled Crouching");
     }
 
-    public void SprintingPressed()
+    public void StartSprint()
     {
         isSprinting = true;
         Debug.Log("Started sprinting");
     }
 
-    public void SprintingReleased()
+    public void StopSprint()
     {
         isSprinting = false;
         Debug.Log("Stopped sprinting");

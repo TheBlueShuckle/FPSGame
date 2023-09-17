@@ -136,8 +136,8 @@ GameObject:
   - component: {fileID: 115105757}
   - component: {fileID: 115105756}
   - component: {fileID: 115105759}
-  m_Layer: 6
-  m_Name: Teleport
+  m_Layer: 7
+  m_Name: Teleport 1
   m_TagString: Teleporter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,7 +151,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115105753}
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: 34, y: 1.5, z: 0}
+  m_LocalPosition: {x: 48, y: 1.5, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -166,7 +166,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115105753}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -230,9 +230,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 115105753}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad96d87b5ae5f23418311ff36d6e026c, type: 3}
+  m_Script: {fileID: 11500000, guid: 85f8ce893f2386f41b412c97a7d5d4f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  promptMessage: Teleport
+  player: {fileID: 233748686}
   teleportTarget: {fileID: 1121542912}
 --- !u!1 &233748686
 GameObject:
@@ -271,6 +273,8 @@ MonoBehaviour:
   defaultSpeed: 5
   gravity: -19.64
   jumpHeight: 0.75
+  lerpCrouch: 0
+  crouchTimer: 0
 --- !u!114 &233748688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2314,8 +2318,9 @@ GameObject:
   - component: {fileID: 1121542916}
   - component: {fileID: 1121542915}
   - component: {fileID: 1121542914}
-  m_Layer: 6
-  m_Name: Teleport Target
+  - component: {fileID: 1121542917}
+  m_Layer: 7
+  m_Name: Teleport 2
   m_TagString: Teleporter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2344,7 +2349,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1121542911}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -2399,6 +2404,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1121542911}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1121542917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121542911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85f8ce893f2386f41b412c97a7d5d4f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  promptMessage: Teleport
+  player: {fileID: 233748686}
+  teleportTarget: {fileID: 115105754}
 --- !u!1 &1126320208
 GameObject:
   m_ObjectHideFlags: 0
@@ -2896,6 +2916,7 @@ GameObject:
   - component: {fileID: 1567014525}
   - component: {fileID: 1567014524}
   - component: {fileID: 1567014523}
+  - component: {fileID: 1567014527}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2986,6 +3007,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1567014527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567014522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85f8ce893f2386f41b412c97a7d5d4f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  promptMessage: 
+  player: {fileID: 0}
+  teleportTarget: {fileID: 0}
 --- !u!1 &1660223510
 GameObject:
   m_ObjectHideFlags: 0
@@ -3197,8 +3233,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1665997479}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.7, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.70000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3229,7 +3265,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671620133}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 31, y: 0, z: 0}
+  m_LocalPosition: {x: 35, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

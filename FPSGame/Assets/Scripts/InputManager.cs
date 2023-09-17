@@ -23,12 +23,12 @@ public class InputManager : MonoBehaviour
         look = GetComponent<PlayerLook>();
 
         onFoot.Jump.performed += ctx => motor.Jump();
-        onFoot.Crouch.performed += ctx => motor.ToggleCrouch();
-        onFoot.SprintStart.performed += ctx => motor.SprintingPressed();
-        onFoot.SprintStop.performed += ctx => motor.SprintingReleased();
+        onFoot.Crouch.performed += ctx => motor.Crouch();
+        onFoot.SprintStart.performed += ctx => motor.StartSprint();
+        onFoot.SprintStop.performed += ctx => motor.StopSprint();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
     }
