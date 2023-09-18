@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class PlayerMotor : MonoBehaviour
@@ -94,7 +89,7 @@ public class PlayerMotor : MonoBehaviour
     {
         if (isGrounded)
         {
-            velocity.y  = Mathf.Sqrt(jumpHeight * -3f * gravity);
+            velocity.y = Mathf.Sqrt(jumpHeight * -3f * gravity);
         }
     }
 
