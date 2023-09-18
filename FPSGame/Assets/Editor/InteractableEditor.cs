@@ -1,18 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using UnityEditor;
 
-public class InteractableEditor : MonoBehaviour
+[CustomEditor(typeof(Interactable), true)]
+
+public class InteractableEditor : Editor
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void OnInspectorGUI()
     {
-        
-    }
+        Interactable interactable = (Interactable)target;
+        if (target.GetType() == typeof(EventOnlyInteractable))
+        {
+            interactable.promptMessage = EditorGUILayout.TextField("Prompt Message", interactable.promptMessage);
+            EditorGUILayout.HelpBox("EventOnlyInteractable can ONLY use UnityEvents", MessageType.Info);
+            if (interactable.GetComponent<InteractionEvent>() == null)
+            {
+                interactable.useEvents = true;
+                interactable.gameObject.AddComponent<InteractionEvent>();
+            }
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        else
+        {
+            base.OnInspectorGUI();
+            if (interactable.useEvents)
+            {
+                if (interactable.GetComponent<InteractionEvent>() == null)
+                {
+                    interactable.gameObject.AddComponent<InteractionEvent>();
+                }
+            }
+
+            else
+            {
+                if (interactable.GetComponent<InteractionEvent>() != null)
+                {
+                    DestroyImmediate(interactable.GetComponent<InteractionEvent>());
+                }
+            }
+        }
+
     }
 }
