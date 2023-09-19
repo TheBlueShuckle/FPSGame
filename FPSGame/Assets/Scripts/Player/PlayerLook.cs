@@ -19,8 +19,11 @@ public class PlayerLook : MonoBehaviour
 
     public void ProcessLook(Vector2 input)
     {
-        float mouseX = input.x;
-        float mouseY = input.y;
+        // magic numbers solves everything!
+        Vector2 magicFix = input * 0.5f * 0.1f;
+
+        float mouseX = magicFix.x;
+        float mouseY = magicFix.y;
 
         xRotation -= (mouseY * Time.deltaTime) * ySensitivity;
         xRotation = Mathf.Clamp(xRotation, -90, 90);
