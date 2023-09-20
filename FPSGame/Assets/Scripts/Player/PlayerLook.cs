@@ -25,10 +25,10 @@ public class PlayerLook : MonoBehaviour
         float mouseX = magicFix.x;
         float mouseY = magicFix.y;
 
-        xRotation -= (mouseY * Time.deltaTime) * ySensitivity;
+        xRotation -= (mouseY) * ySensitivity;
         xRotation = Mathf.Clamp(xRotation, -90, 90);
 
         cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-        transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
+        transform.Rotate(Vector3.up * (mouseX) * xSensitivity);
     }
 }

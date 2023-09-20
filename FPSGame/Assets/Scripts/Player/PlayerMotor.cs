@@ -98,19 +98,15 @@ public class PlayerMotor : MonoBehaviour
         isCrouched = !isCrouched;
         crouchTimer = 0;
         lerpCrouch = true;
-
-        Debug.Log("Toggled Crouching");
     }
 
     public void StartSprint()
     {
         isSprinting = true;
-        Debug.Log("Started sprinting");
     }
 
     public void StopSprint()
     {
         isSprinting = false;
-        Debug.Log("Stopped sprinting");
     }
 }
