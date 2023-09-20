@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
+    [Header("Health Bar")]
     public Image frontHealthBar;
     public Image backHealthBar;
     public float maxHealth = 100f;
@@ -11,9 +12,17 @@ public class PlayerHealth : MonoBehaviour
     private float health;
     private float lerpTimer;
 
+    [Header("Damage Overlay")]
+    public Image overlay;
+    public float duration;
+    public float fadeSpeed;
+
+    private float durationTimer;
+
     void Start()
     {
         health = maxHealth;
+        overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 0);
     }
 
     void Update()
@@ -21,14 +30,21 @@ public class PlayerHealth : MonoBehaviour
         health = Mathf.Clamp(health, 0, maxHealth);
         UpdateHealth();
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (overlay.color.a > 0)
         {
-            TakeDamage(Random.Range(5, 10));
-        }
+            if(health < 20)
+            {
+                return;
+            }
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            RestoreHealth(Random.Range(5, 10));
+            durationTimer += Time.deltaTime;
+
+            if (durationTimer > duration)
+            {
+                float tempAlpha = overlay.color.a;
+                tempAlpha -= Time.deltaTime * fadeSpeed;
+                overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, tempAlpha);
+            }
         }
     }
 
@@ -64,6 +80,8 @@ public class PlayerHealth : MonoBehaviour
     {
         health -= damage;
         lerpTimer = 0f;
+        durationTimer = 0f;
+        overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 1);
     }
 
     public void RestoreHealth(float healAmount)
