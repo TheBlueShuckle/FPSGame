@@ -4280,6 +4280,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1847403794662539458, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
+      propertyPath: runSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847403794662539458, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
+      propertyPath: slideSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847403794662539458, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
+      propertyPath: crouchSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847403794662539458, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
+      propertyPath: sprintSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847403794662539458, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
+      propertyPath: slideTimerMax
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1847403794662539459, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
       propertyPath: m_Name
       value: Player

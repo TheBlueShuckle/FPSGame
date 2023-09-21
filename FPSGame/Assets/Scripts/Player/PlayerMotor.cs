@@ -1,10 +1,18 @@
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
 public class PlayerMotor : MonoBehaviour
 {
+    [Header("Speeds")]
     public float defaultSpeed;
+    public float crouchSpeed;
+    public float sprintSpeed;
+
+    [Header("Jumping")]
     public float gravity;
     public float jumpHeight;
+
+    [Header("Crouch")]
     public bool lerpCrouch;
     public float crouchTimer;
 
@@ -16,6 +24,13 @@ public class PlayerMotor : MonoBehaviour
     private bool isGrounded;
     private bool isCrouched;
     private bool isSprinting;
+    private bool isSliding = false;
+
+    [Header("Slide")]
+    public float slideSpeed = 20;
+    public float slideTimerMax = 2.5f; // time while sliding
+    private Vector3 slideForward;
+    private float slideTimer = 0.0f;
 
 
     void Start()
@@ -26,8 +41,9 @@ public class PlayerMotor : MonoBehaviour
     void Update()
     {
         isGrounded = controller.isGrounded;
+        SetSpeed();
 
-        if (lerpCrouch)
+        if (lerpCrouch && !isSliding)
         {
             crouchTimer += Time.deltaTime;
             float p = crouchTimer / 1;
@@ -49,6 +65,22 @@ public class PlayerMotor : MonoBehaviour
                 crouchTimer = 0;
             }
         }
+
+        if (isSliding)
+        {
+            slideTimer += Time.deltaTime;
+            controller.height = Mathf.Lerp(controller.height, 1, 5 * Time.deltaTime);
+
+            if (slideTimer > slideTimerMax * 0.5f)
+            {
+                speed = Mathf.Lerp(slideSpeed, crouchSpeed, slideTimer / slideTimerMax);
+            }
+
+            if (slideTimer > slideTimerMax)
+            {
+                isSliding = false;
+            }
+        }
     }
 
     //receive inputs for inputmanager and apply them to the character controller
@@ -58,22 +90,15 @@ public class PlayerMotor : MonoBehaviour
         moveDirection.x = input.x;
         moveDirection.z = input.y;
 
-        if (isCrouched)
+        if (isSliding)
         {
-            speed = defaultSpeed / 3f;
-        }
-
-        else if (isSprinting)
-        {
-            speed = defaultSpeed * 2f;
+            controller.Move(slideForward * speed * Time.deltaTime);
         }
 
         else
         {
-            speed = defaultSpeed;
+            controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
         }
-
-        controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
 
         velocity.y += gravity * Time.deltaTime;
 
@@ -83,6 +108,29 @@ public class PlayerMotor : MonoBehaviour
         }
 
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    private void SetSpeed()
+    {
+        if (isSliding)
+        {
+            speed = slideSpeed;
+        }
+
+        else if (isCrouched)
+        {
+            speed = crouchSpeed;
+        }
+
+        else if (isSprinting)
+        {
+            speed = sprintSpeed;
+        }
+
+        else
+        {
+            speed = defaultSpeed;
+        }
     }
 
     public void Jump()
@@ -98,6 +146,19 @@ public class PlayerMotor : MonoBehaviour
         isCrouched = !isCrouched;
         crouchTimer = 0;
         lerpCrouch = true;
+
+        if (isCrouched && isSprinting)
+        {
+            Slide();
+        }
+    }
+
+    private void Slide()
+    {
+        isSliding = true;
+        speed = slideSpeed;
+        slideTimer = 0;
+        slideForward = transform.forward;
     }
 
     public void StartSprint()
