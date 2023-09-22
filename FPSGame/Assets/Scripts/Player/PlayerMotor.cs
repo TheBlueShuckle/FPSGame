@@ -147,7 +147,7 @@ public class PlayerMotor : MonoBehaviour
         crouchTimer = 0;
         lerpCrouch = true;
 
-        if (isCrouched && isSprinting)
+        if (isCrouched && isSprinting && isGrounded)
         {
             Slide();
         }
@@ -156,14 +156,20 @@ public class PlayerMotor : MonoBehaviour
     private void Slide()
     {
         isSliding = true;
+        isSprinting = false;
         speed = slideSpeed;
         slideTimer = 0;
         slideForward = transform.forward;
     }
 
-    public void StartSprint()
+    public void StartSprint(Vector2 input)
     {
-        isSprinting = true;
+        if (input.y > 0)
+        {
+            isSprinting = true;
+            isCrouched = false;
+            lerpCrouch = true;
+        }
     }
 
     public void StopSprint()
