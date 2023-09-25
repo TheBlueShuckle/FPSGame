@@ -1,3 +1,4 @@
+using System;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
@@ -131,6 +132,8 @@ public class PlayerMotor : MonoBehaviour
         {
             speed = defaultSpeed;
         }
+
+        Debug.Log(speed);
     }
 
     public void Jump()
