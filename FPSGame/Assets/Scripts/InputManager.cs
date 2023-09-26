@@ -9,6 +9,8 @@ public class InputManager : MonoBehaviour
     private PlayerInput playerInput;
     public PlayerInput.OnFootActions onFoot;
 
+    [SerializeField] GunSystem gun;
+
     private PlayerMotor motor;
     private PlayerLook look;
 
@@ -26,6 +28,8 @@ public class InputManager : MonoBehaviour
         onFoot.Crouch.performed += ctx => motor.Crouch();
         onFoot.SprintStart.performed += ctx => motor.StartSprint(onFoot.Movement.ReadValue<Vector2>());
         onFoot.SprintStop.performed += ctx => motor.StopSprint();
+
+        onFoot.Shoot.performed += _ => gun.Shoot();
     }
 
     void Update()

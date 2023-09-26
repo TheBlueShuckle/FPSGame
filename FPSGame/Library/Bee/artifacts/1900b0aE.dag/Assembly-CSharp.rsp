@@ -354,6 +354,7 @@
 "Assets/Scripts/Enemy/States/BaseState.cs"
 "Assets/Scripts/Enemy/States/PatrolState.cs"
 "Assets/Scripts/EventOnlyInteractable.cs"
+"Assets/Scripts/GunSystem.cs"
 "Assets/Scripts/InputManager.cs"
 "Assets/Scripts/Interactable.cs"
 "Assets/Scripts/Interactables/Keypad.cs"
