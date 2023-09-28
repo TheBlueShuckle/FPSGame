@@ -24,7 +24,7 @@ public class Gun : MonoBehaviour
     // Reference
     [SerializeField] Transform cam;
     //public Transform attackPoint;
-    [SerializeField] RaycastHit rayHit;
+    [SerializeField] RaycastHit hit;
     [SerializeField] LayerMask enemy;
 
     WaitForSeconds rapidFireWait;
@@ -41,11 +41,11 @@ public class Gun : MonoBehaviour
     {
         currentAmmo--;
 
-        if (Physics.Raycast(cam.position, cam.forward, out rayHit, range))
+        if (Physics.Raycast(cam.position, cam.forward, out hit, range))
         {
-            if (rayHit.collider.GetComponent<Damageable>() != null)
+            if (hit.collider.GetComponent<Damageable>() != null)
             {
-                rayHit.collider.GetComponent<Damageable>().TakeDamage(damage);
+                hit.collider.GetComponent<Damageable>().TakeDamage(damage, hit.point, hit.normal);
             }
         }
     }
