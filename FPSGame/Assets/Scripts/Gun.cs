@@ -81,12 +81,15 @@ public class Gun : MonoBehaviour
             yield return null;
         }
 
-        print("reloading");
+        else
+        {
+            print("reloading");
 
-        yield return reloadWait;
-        currentAmmo = magSize;
+            yield return reloadWait;
+            currentAmmo = magSize;
 
-        print("finished reloading");
+            print("finished reloading");
+        }
     }
 
     private bool CanShoot()

@@ -33,7 +33,7 @@ public class InputManager : MonoBehaviour
 
         onFoot.Shoot.started += _ => StartFiring();
         onFoot.Shoot.canceled += _ => StopFiring();
-        onFoot.Reload.performed += ctx => gun.Reload();
+        onFoot.Reload.performed += _ => gun.StartCoroutine(gun.Reload());
     }
 
     void Update()
