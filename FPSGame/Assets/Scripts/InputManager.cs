@@ -9,12 +9,14 @@ public class InputManager : MonoBehaviour
     private PlayerInput playerInput;
     public PlayerInput.OnFootActions onFoot;
 
-    [SerializeField] GunSystem gun;
+    [SerializeField] Gun gun;
 
     private PlayerMotor motor;
     private PlayerLook look;
 
     public bool isSprinting;
+
+    Coroutine fireCoroutine;
 
     void Awake()
     {
@@ -29,7 +31,9 @@ public class InputManager : MonoBehaviour
         onFoot.SprintStart.performed += ctx => motor.StartSprint(onFoot.Movement.ReadValue<Vector2>());
         onFoot.SprintStop.performed += ctx => motor.StopSprint();
 
-        onFoot.Shoot.performed += _ => gun.Shoot();
+        onFoot.Shoot.started += _ => StartFiring();
+        onFoot.Shoot.canceled += _ => StopFiring();
+        onFoot.Reload.performed += ctx => gun.Reload();
     }
 
     void Update()
@@ -40,6 +44,19 @@ public class InputManager : MonoBehaviour
     void LateUpdate()
     {
         look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
+    }
+
+    void StartFiring()
+    {
+        fireCoroutine = StartCoroutine(gun.RapidFire());
+    }
+
+    void StopFiring()
+    {
+        if(fireCoroutine != null)
+        {
+            StopCoroutine(fireCoroutine);
+        }
     }
 
     #region - Enable / Disable -
