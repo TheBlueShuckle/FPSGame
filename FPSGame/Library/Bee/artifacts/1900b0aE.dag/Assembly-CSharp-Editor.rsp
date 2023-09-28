@@ -362,6 +362,8 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/Editor/InteractableEditor.cs"
+"Assets/JMO Assets/Cartoon FX Easy Editor/Editor/CFXEasyEditor.cs"
+"Assets/JMO Assets/WarFX/Editor/CFX_SpawnSystemEditor.cs"
 -langversion:9.0
 
 /deterministic

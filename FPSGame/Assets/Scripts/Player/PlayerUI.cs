@@ -7,14 +7,23 @@ public class PlayerUI : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI promptText;
+    [SerializeField]
+    private TextMeshProUGUI ammoText;
+    [SerializeField]
+    private Gun gun;
 
-    void Start()
+    private void Update()
     {
-        
+        UpdateAmmoText();
     }
 
-    public void UpdateText(string promptMessage)
+    public void UpdatePromptMessage(string promptMessage)
     {
         promptText.text = promptMessage;
+    }
+
+    public void UpdateAmmoText()
+    {
+        ammoText.text = gun.GetAmmoLeftRatio();
     }
 }

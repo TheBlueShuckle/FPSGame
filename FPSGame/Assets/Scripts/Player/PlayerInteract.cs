@@ -26,14 +26,14 @@ public class PlayerInteract : MonoBehaviour
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         RaycastHit hitInfo; // storing collision info
 
-        playerUI.UpdateText(string.Empty);
+        playerUI.UpdatePromptMessage(string.Empty);
         Debug.DrawRay(ray.origin, ray.direction * rayDistance);
 
         if (Physics.Raycast(ray, out hitInfo, rayDistance, mask) && hitInfo.collider.GetComponent<Interactable>() != null)
         {
             Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
 
-            playerUI.UpdateText(interactable.promptMessage);
+            playerUI.UpdatePromptMessage(interactable.promptMessage);
 
             if (inputManager.onFoot.Interact.triggered)
             {

@@ -1,4 +1,4 @@
-using TMPro.Examples;
+using System;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
@@ -8,7 +8,6 @@ public class PlayerMotor : MonoBehaviour
     public float defaultSpeed;
     public float crouchSpeed;
     public float sprintSpeed;
-    public float fallingMovementSpeed;
 
     [Header("Jumping")]
     public float gravity;
@@ -100,11 +99,6 @@ public class PlayerMotor : MonoBehaviour
         else
         {
             controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
-        }
-
-        if (input.y <= 0)
-        {
-            StopSprint();
         }
 
         velocity.y += gravity * Time.deltaTime;
