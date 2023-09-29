@@ -11,7 +11,6 @@ public class Gun : MonoBehaviour
     [SerializeField] float spread;
     [SerializeField] float range;
     [SerializeField] float reloadTime;
-    [SerializeField] float timeBetweenShots;
     [SerializeField] int magSize;
     [SerializeField] int bulletsPerTap;
     [SerializeField] bool rapidFire;
