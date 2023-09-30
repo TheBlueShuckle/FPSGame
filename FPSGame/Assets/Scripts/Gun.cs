@@ -18,7 +18,7 @@ public class Gun : MonoBehaviour
     private int currentAmmo, bulletsShot;
 
     // bools
-    private bool shooting, readyToShoot;
+    private bool reloading;
 
     // Reference
     [SerializeField] Transform cam;
@@ -34,11 +34,13 @@ public class Gun : MonoBehaviour
         rapidFireWait = new WaitForSeconds(1 / fireRate);
         reloadWait = new WaitForSeconds(reloadTime);
         currentAmmo = magSize;
+        bulletsShot = bulletsPerTap;
+        reloading = false;
     }
 
     public void Shoot()
     {
-        currentAmmo--;
+        currentAmmo -= bulletsShot;
 
         if (Physics.Raycast(cam.position, cam.forward, out hit, range))
         {
@@ -82,18 +84,22 @@ public class Gun : MonoBehaviour
 
         else
         {
+            reloading = true;
+
             print("reloading");
 
             yield return reloadWait;
             currentAmmo = magSize;
 
             print("finished reloading");
+
+            reloading = false;
         }
     }
 
     private bool CanShoot()
     {
-        return currentAmmo > 0;
+        return currentAmmo > 0 && !reloading;
     }
 
     public string GetAmmoLeftRatio()
