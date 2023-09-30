@@ -9,19 +9,19 @@ public class Keypad : Interactable
     [SerializeField]
     private GameObject door;
 
-    void Start()
+    public override void OnLookStart()
     {
-        
-    }
-
-    void Update()
-    {
-        
+        base.OnLookStart();
     }
 
     protected override void Interact()
     {
         doorOpen = !doorOpen;
         door.GetComponent<Animator>().SetBool("IsOpen", doorOpen);
+    }
+
+    public override void OnLookStop()
+    {
+        base.OnLookStop();
     }
 }

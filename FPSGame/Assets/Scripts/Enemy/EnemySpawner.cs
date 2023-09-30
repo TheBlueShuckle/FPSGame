@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject zombie;
+    [SerializeField] private float spawnSpread = 5f;
 
     private float zombieSpawnTime = 0;
     private float zombieSpawnTimeMax = 2.5f;
@@ -22,8 +23,13 @@ public class EnemySpawner : MonoBehaviour
     {
         if(zombieSpawnTime >= zombieSpawnTimeMax)
         {
-            GameObject newEnemy = Instantiate(zombie, new Vector3(Random.Range(-5f, 5f), 1, Random.Range(-5f, 5f)), Quaternion.identity);
+            GameObject newEnemy = Instantiate(zombie, RandomSpawnLocation(), Quaternion.identity);
             zombieSpawnTime = 0;
         }
+    }
+
+    private Vector3 RandomSpawnLocation()
+    {
+        return new Vector3(transform.position.x + Random.Range(-spawnSpread, spawnSpread), 1, transform.position.y + Random.Range(-spawnSpread, spawnSpread));
     }
 }

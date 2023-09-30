@@ -10,6 +10,11 @@ public class Portal : Interactable
     public Transform teleportTarget;
     private CharacterController characterController;
 
+    public override void OnLookStart()
+    {
+        base.OnLookStart();
+    }
+
     protected override void Interact()
     {
         characterController = player.gameObject.GetComponent<CharacterController>();
@@ -19,5 +24,10 @@ public class Portal : Interactable
         characterController.enabled = true;
 
         Debug.Log("teleported to: " + teleportTarget.position);
+    }
+
+    public override void OnLookStop()
+    {
+        base.OnLookStop();
     }
 }

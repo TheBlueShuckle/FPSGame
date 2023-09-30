@@ -14,6 +14,8 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField]
     private LayerMask mask;
 
+    private Interactable currentTarget;
+
     private void Start()
     {
         cam = GetComponent<PlayerLook>().cam;
@@ -23,22 +25,66 @@ public class PlayerInteract : MonoBehaviour
 
     private void Update()
     {
-        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
-        RaycastHit hitInfo; // storing collision info
+        HandleRaycast();
 
-        playerUI.UpdatePromptMessage(string.Empty);
-        Debug.DrawRay(ray.origin, ray.direction * rayDistance);
-
-        if (Physics.Raycast(ray, out hitInfo, rayDistance, mask) && hitInfo.collider.GetComponent<Interactable>() != null)
+        if (currentTarget != null)
         {
-            Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
-
-            playerUI.UpdatePromptMessage(interactable.promptMessage);
+            playerUI.UpdatePromptMessage(currentTarget.promptMessage);
 
             if (inputManager.onFoot.Interact.triggered)
             {
-                interactable.BaseInteract();
+                currentTarget.OnInteract();
             }
+        }
+
+        else
+        {
+            playerUI.UpdatePromptMessage(null);
+        }
+    }
+
+    private void HandleRaycast()
+    {
+        RaycastHit hitInfo;
+        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+
+        if (Physics.Raycast(ray, out hitInfo, rayDistance, mask))
+        {
+            Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
+
+            if(interactable != null)
+            {
+                // if you're still looking at the same interactable
+                if (interactable == currentTarget)
+                {
+                    return;
+                }
+                // if the new interactable you're looking at overlaps with the previous interactable
+                else if (currentTarget != null)
+                {
+                    currentTarget.OnLookStop();
+                    currentTarget = interactable;
+                    currentTarget.OnLookStart();
+                }
+                // if the interactable you're looking at is new
+                else
+                {
+                    currentTarget = interactable;
+                    currentTarget.OnLookStart();
+                }
+            }
+            // if interactable is null
+            else if (currentTarget != null)
+            {
+                currentTarget.OnLookStop();
+                currentTarget = null;
+            }
+        }
+        // if not looking at anything
+        else if (currentTarget != null)
+        {
+            currentTarget.OnLookStop();
+            currentTarget = null;
         }
     }
 }

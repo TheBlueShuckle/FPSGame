@@ -9,14 +9,23 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField]
     public string promptMessage;
 
-    // Will be called from player
-    public void BaseInteract()
+    public virtual void OnLookStart()
+    {
+
+    }
+
+    public void OnInteract()
     {
         if (useEvents)
         {
             GetComponent<InteractionEvent>().onInteract.Invoke();
         }
         Interact();
+    }
+
+    public virtual void OnLookStop()
+    {
+
     }
 
     protected virtual void Interact()

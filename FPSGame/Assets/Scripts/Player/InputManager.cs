@@ -13,8 +13,7 @@ public class InputManager : MonoBehaviour
 
     private PlayerMotor motor;
     private PlayerLook look;
-
-    public bool isSprinting;
+    private bool isSpinting;
 
     Coroutine fireCoroutine;
 
@@ -39,6 +38,7 @@ public class InputManager : MonoBehaviour
     void Update()
     {
         motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
+        gun.isMoving(onFoot.Movement.ReadValue<Vector2>());
     }
 
     void LateUpdate()
@@ -49,6 +49,7 @@ public class InputManager : MonoBehaviour
     void StartFiring()
     {
         fireCoroutine = StartCoroutine(gun.RapidFire());
+        gun.IsShooting(true);
     }
 
     void StopFiring()
@@ -56,6 +57,7 @@ public class InputManager : MonoBehaviour
         if(fireCoroutine != null)
         {
             StopCoroutine(fireCoroutine);
+            gun.IsShooting(false);
         }
     }
 

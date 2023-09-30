@@ -115,6 +115,7 @@
 -define:ENABLE_INPUT_SYSTEM
 -define:ENABLE_LEGACY_INPUT_MANAGER
 -define:TEXTCORE_FONT_ENGINE_1_5_OR_NEWER
+-define:UNITY_POST_PROCESSING_STACK_V2
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
 -r:"C:/Program Files/Unity/Hub/Editor/2021.3.23f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
@@ -327,6 +328,8 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Performance.Profile-Analyzer.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.PlasticSCM.Editor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Postprocessing.Editor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Postprocessing.Runtime.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Rider.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.ref.dll"
@@ -362,14 +365,15 @@
 "Assets/JMO Assets/WarFX/Scripts/WFX_BulletHoleDecal.cs"
 "Assets/JMO Assets/WarFX/Scripts/WFX_LightFlicker.cs"
 "Assets/JMO Assets/WarFX/Spawn System/CFX_SpawnSystem.cs"
-"Assets/Scripts/Damageable.cs"
+"Assets/Scripts/Combat/CameraShake.cs"
+"Assets/Scripts/Combat/Damageable.cs"
+"Assets/Scripts/Combat/Gun.cs"
 "Assets/Scripts/Enemy/Enemy.cs"
 "Assets/Scripts/Enemy/EnemySpawner.cs"
 "Assets/Scripts/Enemy/Path.cs"
 "Assets/Scripts/Enemy/StateMachine.cs"
 "Assets/Scripts/Enemy/States/BaseState.cs"
 "Assets/Scripts/Enemy/States/PatrolState.cs"
-"Assets/Scripts/Gun.cs"
 "Assets/Scripts/Interactables/EventOnlyInteractable.cs"
 "Assets/Scripts/Interactables/Interactable.cs"
 "Assets/Scripts/Interactables/InteractionEvent.cs"
