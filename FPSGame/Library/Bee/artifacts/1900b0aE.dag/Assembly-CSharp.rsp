@@ -380,6 +380,7 @@
 "Assets/Scripts/Interactables/Keypad.cs"
 "Assets/Scripts/Interactables/Portal.cs"
 "Assets/Scripts/Interactables/Teleport.cs"
+"Assets/Scripts/PickUpController.cs"
 "Assets/Scripts/Player/InputManager.cs"
 "Assets/Scripts/Player/PlayerHealth.cs"
 "Assets/Scripts/Player/PlayerInteract.cs"

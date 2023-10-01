@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class InputManager : MonoBehaviour
 {
     private PlayerInput playerInput;
     public PlayerInput.OnFootActions onFoot;
 
-    Gun gun;
+    private Gun gun;
+    private PickUpController pickUpController;
 
     private PlayerMotor motor;
     private PlayerLook look;
@@ -20,6 +22,7 @@ public class InputManager : MonoBehaviour
     void Awake()
     {
         gun = gameObject.GetComponentInChildren<Gun>();
+        pickUpController = gameObject.GetComponentInChildren<PickUpController>();
 
         playerInput = new PlayerInput();
         onFoot = playerInput.OnFoot;
@@ -34,13 +37,22 @@ public class InputManager : MonoBehaviour
 
         onFoot.Shoot.started += _ => StartFiring();
         onFoot.Shoot.canceled += _ => StopFiring();
-        onFoot.Reload.performed += _ => gun.StartCoroutine(gun.Reload());
+        onFoot.Reload.performed += _ => Reload();
+
+        onFoot.Drop.performed += _ => DropGun();
     }
 
     void Update()
     {
+        gun = gameObject.GetComponentInChildren<Gun>();
+        pickUpController = gameObject.GetComponentInChildren<PickUpController>();
+
         motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
-        gun.isMoving(onFoot.Movement.ReadValue<Vector2>());
+
+        if (gun != null)
+        {
+            gun.isMoving(onFoot.Movement.ReadValue<Vector2>());
+        }
     }
 
     void LateUpdate()
@@ -50,16 +62,38 @@ public class InputManager : MonoBehaviour
 
     void StartFiring()
     {
-        fireCoroutine = StartCoroutine(gun.RapidFire());
-        gun.IsShooting(true);
+        if (gun != null)
+        {
+            fireCoroutine = StartCoroutine(gun.RapidFire());
+            gun.IsShooting(true);
+        }
     }
 
     void StopFiring()
     {
-        if(fireCoroutine != null)
+        if (gun != null)
         {
-            StopCoroutine(fireCoroutine);
-            gun.IsShooting(false);
+            if (fireCoroutine != null)
+            {
+                StopCoroutine(fireCoroutine);
+                gun.IsShooting(false);
+            }
+        }
+    }
+
+    void Reload()
+    {
+        if (gun != null)
+        {
+            gun.StartCoroutine(gun.Reload());
+        }
+    }
+
+    void DropGun()
+    {
+        if (pickUpController != null)
+        {
+            pickUpController.Drop();
         }
     }
 

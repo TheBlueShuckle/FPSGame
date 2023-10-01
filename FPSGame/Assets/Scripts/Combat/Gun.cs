@@ -58,6 +58,16 @@ public class Gun : MonoBehaviour
 
     private void Update()
     {
+        if (cam == null)
+        {
+            cam = gameObject.GetComponentInParent<Camera>().transform;
+        }
+
+        if (cameraShake == null)
+        {
+            cameraShake = gameObject.GetComponentInParent<CameraShake>();
+        }
+
         if (!isShooting)
         {
             muzzleFlash.SetActive(false);

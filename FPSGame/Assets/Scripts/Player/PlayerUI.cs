@@ -15,11 +15,15 @@ public class PlayerUI : MonoBehaviour
     private void Start()
     {
         gun = gameObject.GetComponentInChildren<Gun>();
-
     }
 
     private void Update()
     {
+        if (gun != gameObject.GetComponentInChildren<Gun>())
+        {
+            gun = gameObject.GetComponentInChildren<Gun>();
+        }
+
         UpdateAmmoText();
     }
 
