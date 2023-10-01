@@ -5816,9 +5816,41 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2137991576}
     - target: {fileID: 984832038, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
+      propertyPath: range
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 984832038, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
+      propertyPath: rangeMax
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 984832038, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
+      propertyPath: damageMax
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 984832038, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
+      propertyPath: damageMin
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 984832038, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
       propertyPath: muzzleFlash
       value: 
       objectReference: {fileID: 1302571800}
+    - target: {fileID: 984832038, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
+      propertyPath: damageDropOffEnd
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 984832038, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
+      propertyPath: damageDropOffPoint
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 984832038, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
+      propertyPath: damageDropOffStart
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 984832038, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
+      propertyPath: damageBottomCapPercent
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 1847403794662539459, guid: fe24b57c2dfff7c4fbd6c96ef075d08e, type: 3}
       propertyPath: m_Name
       value: Player

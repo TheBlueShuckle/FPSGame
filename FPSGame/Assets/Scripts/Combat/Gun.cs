@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.U2D;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,14 +8,17 @@ using UnityEngine.InputSystem;
 public class Gun : MonoBehaviour
 {
     [Header("Gun stats")]
-    [SerializeField] int damage;
+    [SerializeField] int damageMax;
+    [SerializeField] int damageMin;
     [SerializeField] float fireRate;
     [SerializeField] float spread;
-    [SerializeField] float range;
+    [SerializeField] float rangeMax;
     [SerializeField] float reloadTime;
     [SerializeField] int magSize;
     [SerializeField] int bulletsPerTap;
     [SerializeField] bool rapidFire;
+    [SerializeField] float damageDropOffStart;
+    [SerializeField] float damageDropOffEnd;
 
     [Header("Camera Shake")]
     [SerializeField] float secondsDuration;
@@ -66,13 +70,13 @@ public class Gun : MonoBehaviour
             AddSpread();
             muzzleFlash.SetActive(true);
 
-            print($"{shootDirection}");
-
-            if (Physics.Raycast(cam.position, shootDirection, out hit, range))
+            if (Physics.Raycast(cam.position, shootDirection, out hit, rangeMax))
             {
                 if (hit.collider.GetComponent<Damageable>() != null)
                 {
-                    hit.collider.GetComponent<Damageable>().TakeDamage(damage, hit.point, hit.normal);
+                    int calcDamage;
+                    hit.collider.GetComponent<Damageable>().TakeDamage(calcDamage = GetDamageDropoff(hit.distance), hit.point, hit.normal);
+                    print($"Dealt {calcDamage} damage");
                 }
             }
         }
@@ -130,6 +134,7 @@ public class Gun : MonoBehaviour
         else
         {
             reloading = true;
+            isShooting = false;
 
             print("reloading");
 
@@ -168,5 +173,32 @@ public class Gun : MonoBehaviour
     public void IsShooting(bool isShooting)
     {
         this.isShooting = isShooting;
+    }
+
+    // complicated damageDropoff
+    /*
+    private int GetDramageDropoff(float distance, float maxDistance)
+    {
+        return Mathf.RoundToInt(damage * (-0.0000454f * Mathf.Exp(10 * (distance / maxDistance)) + 1));
+    }
+    */
+
+    private int GetDamageDropoff(float distance)
+    {
+        if (distance <= damageDropOffStart)
+        {
+            return damageMax;
+        }
+
+        if (distance >= damageDropOffEnd)
+        {
+            return damageMin;
+        }
+
+        float dropOffRange = damageDropOffEnd - damageDropOffStart;
+
+        float distanceNormalised = (distance - damageDropOffStart) / dropOffRange;
+
+        return Mathf.RoundToInt(Mathf.Lerp(damageMax, damageMin, distanceNormalised));
     }
 }
