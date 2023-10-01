@@ -9,7 +9,7 @@ public class InputManager : MonoBehaviour
     private PlayerInput playerInput;
     public PlayerInput.OnFootActions onFoot;
 
-    [SerializeField] Gun gun;
+    Gun gun;
 
     private PlayerMotor motor;
     private PlayerLook look;
@@ -19,6 +19,8 @@ public class InputManager : MonoBehaviour
 
     void Awake()
     {
+        gun = gameObject.GetComponentInChildren<Gun>();
+
         playerInput = new PlayerInput();
         onFoot = playerInput.OnFoot;
 

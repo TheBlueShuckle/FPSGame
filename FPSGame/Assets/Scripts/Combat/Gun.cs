@@ -8,22 +8,24 @@ using UnityEngine.InputSystem;
 public class Gun : MonoBehaviour
 {
     [Header("Gun stats")]
-    [SerializeField] int damageMax;
-    [SerializeField] int damageMin;
     [SerializeField] float fireRate;
     [SerializeField] float spread;
-    [SerializeField] float rangeMax;
     [SerializeField] float reloadTime;
     [SerializeField] int magSize;
     [SerializeField] int bulletsPerTap;
     [SerializeField] bool rapidFire;
+
+    [Header("Damage")]
+    [SerializeField] int damageMax;
+    [SerializeField] int damageMin;
     [SerializeField] float damageDropOffStart;
     [SerializeField] float damageDropOffEnd;
+    [SerializeField] float rangeMax;
 
     [Header("Camera Shake")]
     [SerializeField] float secondsDuration;
     [SerializeField] float magnitude;
-    [SerializeField] CameraShake cameraShake;
+    CameraShake cameraShake;
 
     private int currentAmmo;
     private float tempSpread;
@@ -35,7 +37,7 @@ public class Gun : MonoBehaviour
     private bool isRunning = false;
 
     [Header("References")]
-    [SerializeField] Transform cam;
+    Transform cam;
     [SerializeField] RaycastHit hit;
     [SerializeField] LayerMask enemy;
     [SerializeField] GameObject muzzleFlash;
@@ -45,6 +47,8 @@ public class Gun : MonoBehaviour
 
     private void Awake()
     {
+        cam = gameObject.GetComponentInParent<Camera>().transform;
+        cameraShake = gameObject.GetComponentInParent<CameraShake>();
         rapidFireWait = new WaitForSeconds(1 / fireRate);
         reloadWait = new WaitForSeconds(reloadTime);
         muzzleFlash.SetActive(false);
@@ -174,14 +178,6 @@ public class Gun : MonoBehaviour
     {
         this.isShooting = isShooting;
     }
-
-    // complicated damageDropoff
-    /*
-    private int GetDramageDropoff(float distance, float maxDistance)
-    {
-        return Mathf.RoundToInt(damage * (-0.0000454f * Mathf.Exp(10 * (distance / maxDistance)) + 1));
-    }
-    */
 
     private int GetDamageDropoff(float distance)
     {

@@ -9,8 +9,14 @@ public class PlayerUI : MonoBehaviour
     private TextMeshProUGUI promptText;
     [SerializeField]
     private TextMeshProUGUI ammoText;
-    [SerializeField]
+
     private Gun gun;
+
+    private void Start()
+    {
+        gun = gameObject.GetComponentInChildren<Gun>();
+
+    }
 
     private void Update()
     {
