@@ -41,14 +41,20 @@ public class Gun : MonoBehaviour
     [SerializeField] RaycastHit hit;
     [SerializeField] LayerMask enemy;
     [SerializeField] GameObject muzzleFlash;
+    PickUpController pickUpController;
 
     WaitForSeconds rapidFireWait;
     WaitForSeconds reloadWait;
 
     private void Awake()
     {
-        cam = gameObject.GetComponentInParent<Camera>().transform;
-        cameraShake = gameObject.GetComponentInParent<CameraShake>();
+        pickUpController = GetComponent<PickUpController>();
+
+        if (pickUpController.equipped)
+        {
+            SetPlayerVars();
+        }
+
         rapidFireWait = new WaitForSeconds(1 / fireRate);
         reloadWait = new WaitForSeconds(reloadTime);
         muzzleFlash.SetActive(false);
@@ -58,20 +64,21 @@ public class Gun : MonoBehaviour
 
     private void Update()
     {
-        if (cam == null)
+        if (cam == null || cameraShake == null)
         {
-            cam = gameObject.GetComponentInParent<Camera>().transform;
-        }
-
-        if (cameraShake == null)
-        {
-            cameraShake = gameObject.GetComponentInParent<CameraShake>();
+            SetPlayerVars();
         }
 
         if (!isShooting)
         {
             muzzleFlash.SetActive(false);
         }
+    }
+
+    private void SetPlayerVars()
+    {
+        cam = gameObject.GetComponentInParent<Camera>().transform;
+        cameraShake = gameObject.GetComponentInParent<CameraShake>();
     }
 
     public void Shoot()

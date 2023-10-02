@@ -14,14 +14,25 @@ public class PlayerUI : MonoBehaviour
 
     private void Start()
     {
-        gun = gameObject.GetComponentInChildren<Gun>();
+        if (gameObject.GetComponentInChildren<Gun>() != null)
+        {
+            gun = gameObject.GetComponentInChildren<Gun>();
+        }
     }
 
     private void Update()
     {
         if (gun != gameObject.GetComponentInChildren<Gun>())
         {
-            gun = gameObject.GetComponentInChildren<Gun>();
+            if (gameObject.GetComponentInChildren<Gun>() != null)
+            {
+                gun = gameObject.GetComponentInChildren<Gun>();
+            }
+
+            else
+            {
+                gun = null;
+            }
         }
 
         UpdateAmmoText();
@@ -34,6 +45,12 @@ public class PlayerUI : MonoBehaviour
 
     public void UpdateAmmoText()
     {
-        ammoText.text = gun.GetAmmoLeftRatio();
+        if (gun != null)
+        {
+            ammoText.text = gun.GetAmmoLeftRatio();
+            return;
+        }
+
+        ammoText.text = "";
     }
 }

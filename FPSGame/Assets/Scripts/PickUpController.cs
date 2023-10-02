@@ -63,6 +63,9 @@ public class PickUpController : MonoBehaviour
     {
         if (equipped)
         {
+            gun.StopAllCoroutines();
+            gun.IsShooting(false);
+
             equipped = false;
             slotFull = false;
 

@@ -21,8 +21,15 @@ public class InputManager : MonoBehaviour
 
     void Awake()
     {
-        gun = gameObject.GetComponentInChildren<Gun>();
-        pickUpController = gameObject.GetComponentInChildren<PickUpController>();
+        if (gameObject.GetComponentInChildren<Gun>() != null)
+        {
+            gun = gameObject.GetComponentInChildren<Gun>();
+        }
+
+        if (gameObject.GetComponentInChildren<PickUpController>() != null)
+        {
+            pickUpController = gameObject.GetComponentInChildren<PickUpController>();
+        }
 
         playerInput = new PlayerInput();
         onFoot = playerInput.OnFoot;
@@ -44,8 +51,15 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
-        gun = gameObject.GetComponentInChildren<Gun>();
-        pickUpController = gameObject.GetComponentInChildren<PickUpController>();
+        if (gun == null && gameObject.GetComponentInChildren<Gun>() != null)
+        {
+            gun = gameObject.GetComponentInChildren<Gun>();
+        }
+
+        if (pickUpController == null)
+        {
+            pickUpController = gameObject.GetComponentInChildren<PickUpController>();
+        }
 
         motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
 
@@ -93,7 +107,12 @@ public class InputManager : MonoBehaviour
     {
         if (pickUpController != null)
         {
+            gun.StopAllCoroutines();
+
             pickUpController.Drop();
+
+            pickUpController = null;
+            gun = null;
         }
     }
 
