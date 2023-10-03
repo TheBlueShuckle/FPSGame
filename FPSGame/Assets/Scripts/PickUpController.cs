@@ -63,8 +63,7 @@ public class PickUpController : MonoBehaviour
     {
         if (equipped)
         {
-            gun.StopAllCoroutines();
-            gun.IsShooting(false);
+            gun.OnDrop();
 
             equipped = false;
             slotFull = false;
@@ -74,17 +73,22 @@ public class PickUpController : MonoBehaviour
             rb.isKinematic = false;
             coll.isTrigger = false;
 
-            rb.velocity = player.GetComponent<CharacterController>().velocity;
-
-            rb.AddForce(cam.forward * dropForwardForce, ForceMode.Impulse);
-            rb.AddForce(cam.up * dropUpwardForce, ForceMode.Impulse);
-
-            float random = Random.Range(-1f, 1f);
-            rb.AddTorque(new Vector3(random, random, random) * 10);
+            ThrowGun();
 
             gun.enabled = false;
 
             gameObject.layer = 7;
         }
+    }
+
+    private void ThrowGun()
+    {
+        rb.velocity = player.GetComponent<CharacterController>().velocity;
+
+        rb.AddForce(cam.forward * dropForwardForce, ForceMode.Impulse);
+        rb.AddForce(cam.up * dropUpwardForce, ForceMode.Impulse);
+
+        float random = Random.Range(-1f, 1f);
+        rb.AddTorque(new Vector3(random, random, random) * 10);
     }
 }

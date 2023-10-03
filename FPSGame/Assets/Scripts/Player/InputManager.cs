@@ -107,7 +107,10 @@ public class InputManager : MonoBehaviour
     {
         if (pickUpController != null)
         {
-            gun.StopAllCoroutines();
+            if(fireCoroutine != null)
+            {
+                StopCoroutine(fireCoroutine);
+            }
 
             pickUpController.Drop();
 

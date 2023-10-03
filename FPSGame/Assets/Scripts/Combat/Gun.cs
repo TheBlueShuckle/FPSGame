@@ -196,6 +196,13 @@ public class Gun : MonoBehaviour
         this.isShooting = isShooting;
     }
 
+    public void OnDrop()
+    {
+        StopAllCoroutines();
+        IsShooting(false);
+        muzzleFlash.SetActive(false);
+    }
+
     private int GetDamageDropoff(float distance)
     {
         if (distance <= damageDropOffStart)
