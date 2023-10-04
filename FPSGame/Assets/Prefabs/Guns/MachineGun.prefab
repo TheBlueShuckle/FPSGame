@@ -2837,9 +2837,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c433960f4ab93a40b92a6826d24b059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 10
+  fireRate: 25
   spread: 0.03
-  reloadTime: 2
+  reloadTime: 5
   magSize: 150
   bulletsPerTap: 1
   rapidFire: 1
@@ -2898,9 +2898,6 @@ MonoBehaviour:
   gun: {fileID: 4917772326692270823}
   rb: {fileID: 5630789623761766901}
   coll: {fileID: 54205281712336973}
-  player: {fileID: 0}
-  gunContainer: {fileID: 0}
-  cam: {fileID: 0}
   pickUpRange: 10
   dropForwardForce: 2
   dropUpwardForce: 2
@@ -4212,15 +4209,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.007
+      value: 0.003
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.148
+      value: 0.136
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.426
+      value: 0.422
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
       propertyPath: m_LocalRotation.w

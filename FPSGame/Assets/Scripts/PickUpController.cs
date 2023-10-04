@@ -7,9 +7,9 @@ public class PickUpController : MonoBehaviour
     [SerializeField] public Gun gun;
     [SerializeField] public Rigidbody rb;
     [SerializeField] public BoxCollider coll;
-    [SerializeField] public Transform player;
-    [SerializeField] public Transform gunContainer;
-    [SerializeField] public Transform cam;
+    Transform player;
+    Transform gunContainer;
+    Transform cam;
 
     [SerializeField] public float pickUpRange;
     [SerializeField] public float dropForwardForce;
@@ -17,6 +17,13 @@ public class PickUpController : MonoBehaviour
 
     [SerializeField] public bool equipped;
     public static bool slotFull;
+
+    private void Awake()
+    {
+        player = GameObject.Find("Player").transform;
+        cam = GameObject.Find("PlayerCamera").transform;
+        gunContainer = GameObject.Find("GunContainer").transform;
+    }
 
     private void Start()
     {
