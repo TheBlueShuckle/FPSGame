@@ -31,7 +31,6 @@ public class Damageable : MonoBehaviour
         }
     }
 
-
     private void Die()
     {
         print(name + " was destroyed");

@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6084891c71e13c848996fe618ce2dd47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zombie: {fileID: 4528455479234804399, guid: e7df2a8043805554e9366c8ab731ce10, type: 3}
+  zombie: {fileID: 7888517628636437212, guid: e7df2a8043805554e9366c8ab731ce10, type: 3}
+  spawnSpread: 5

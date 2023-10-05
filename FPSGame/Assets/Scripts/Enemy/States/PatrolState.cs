@@ -5,7 +5,8 @@ using UnityEngine;
 public class PatrolState : BaseState
 {
     public int waypointIndex;
-    public float waitTimer; 
+    public float waitTimer;
+    [SerializeField] float waitTimerMax;
 
     public override void Enter()
     {
@@ -14,6 +15,11 @@ public class PatrolState : BaseState
     public override void Perform()
     {
         PatrolCycle();
+
+        if (enemy.CanSeePlayer())
+        {
+            stateMachine.ChangeState(new AttackState());
+        }
     }
 
     public override void Exit()
@@ -26,7 +32,7 @@ public class PatrolState : BaseState
         {
             waitTimer += Time.deltaTime;
 
-            if (waitTimer > 1)
+            if (waitTimer > waitTimerMax)
             {
                 if (waypointIndex < enemy.path.waypoints.Count - 1)
                 {
