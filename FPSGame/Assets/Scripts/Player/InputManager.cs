@@ -15,7 +15,6 @@ public class InputManager : MonoBehaviour
 
     private PlayerMotor motor;
     private PlayerLook look;
-    private bool isSpinting;
 
     Coroutine fireCoroutine;
 
@@ -67,6 +66,8 @@ public class InputManager : MonoBehaviour
         {
             gun.isMoving(onFoot.Movement.ReadValue<Vector2>());
         }
+
+        motor.UpdateSprinting(onFoot.Movement.ReadValue<Vector2>());
     }
 
     void LateUpdate()

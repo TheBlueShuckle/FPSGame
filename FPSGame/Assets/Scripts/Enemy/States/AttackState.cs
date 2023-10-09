@@ -16,6 +16,11 @@ public class AttackState : BaseState
             enemy.ChasePlayer();
         }
 
+        else if (enemy.CanSensePlayer())
+        {
+            stateMachine.ChangeState(new AlertState());
+        }
+
         else
         {
             stateMachine.ChangeState(new PatrolState());

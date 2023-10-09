@@ -33,7 +33,7 @@ public class Damageable : MonoBehaviour
 
     private void Die()
     {
-        print(name + " was destroyed");
-        Destroy(gameObject);
+        print(transform.parent.gameObject.name + " was destroyed");
+        Destroy(transform.parent.gameObject);
     }
 }

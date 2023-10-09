@@ -179,4 +179,12 @@ public class PlayerMotor : MonoBehaviour
     {
         isSprinting = false;
     }
+
+    public void UpdateSprinting(Vector2 input)
+    {
+        if (input.y <= 0)
+        {
+            StopSprint();
+        }
+    }
 }

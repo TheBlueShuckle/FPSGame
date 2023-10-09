@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -20,8 +22,15 @@ public class Enemy : MonoBehaviour
 
     [Header("Sight Values")]
     public float sightDistance = 20f;
+    public float senseDistance = 40f;
     public float fieldOfView = 85f;
     public float eyeHeight;
+
+    [Header("Attack")]
+    [SerializeField] private float meleeRange = 2f;
+    [SerializeField] private float damage = 10f;
+    [SerializeField] private float damageCooldownTotalSeconds = 1;
+    private float damageCooldownSeconds = 0;
 
     private void Awake()
     {
@@ -39,6 +48,22 @@ public class Enemy : MonoBehaviour
         ChangeSpeed();
     }
 
+    public bool CanSensePlayer()
+    {
+        if (player == null)
+        {
+            return false;
+        }
+
+        if (Vector3.Distance(transform.position, player.transform.position) < senseDistance)
+        {
+            Vector3 targetDirection = player.transform.position - transform.position - (Vector3.up * eyeHeight);
+            return LineOfSightIsClear(targetDirection, senseDistance);
+        }
+
+        return false;
+    }
+
     public bool CanSeePlayer()
     {
         if (player == null)
@@ -53,7 +78,7 @@ public class Enemy : MonoBehaviour
 
             if (angleToPlayer >= -fieldOfView && 
                 angleToPlayer <= fieldOfView && 
-                LineOfSightIsClear(targetDirection))
+                LineOfSightIsClear(targetDirection, sightDistance))
             {
                 return true;
             }
@@ -62,26 +87,50 @@ public class Enemy : MonoBehaviour
         return false;
     }
 
-    private bool LineOfSightIsClear(Vector3 targetDirection)
+    private bool LineOfSightIsClear(Vector3 targetDirection, float distance)
     {
         Ray ray = new Ray(transform.position + (Vector3.up * eyeHeight), targetDirection);
-        RaycastHit hitInfo;
 
-        if (Physics.Raycast(ray, out hitInfo, sightDistance))
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, distance))
         {
             if (hitInfo.transform.gameObject == player)
             {
-                Debug.DrawRay(ray.origin, ray.direction * sightDistance);
+                Debug.DrawRay(ray.origin, ray.direction * distance);
                 return true;
             }
         }
 
         return false;
+    }
+
+    public void MoveTowardsPlayer()
+    {
+        agent.SetDestination(player.transform.position);
     }
 
     public void ChasePlayer()
     {
-        agent.SetDestination(player.transform.position);
+        if (Vector3.Distance(transform.position, player.transform.position) < meleeRange)
+        {
+            agent.SetDestination(transform.position);
+            Attack();
+        }
+
+        else
+        {
+            agent.SetDestination(player.transform.position);
+        }
+    }
+
+    private void Attack()
+    {
+        damageCooldownSeconds += Time.deltaTime;
+
+        if (damageCooldownSeconds > damageCooldownTotalSeconds)
+        {
+            player.GetComponent<PlayerHealth>().TakeDamage(damage);
+            damageCooldownSeconds = 0;
+        }
     }
 
     private void ChangeSpeed()
@@ -91,7 +140,7 @@ public class Enemy : MonoBehaviour
             agent.speed = chaseSpeed;
         }
 
-        if (stateMachine.activeState.GetType() == typeof(PatrolState))
+        else
         {
             agent.speed = patrolSpeed;
         }
