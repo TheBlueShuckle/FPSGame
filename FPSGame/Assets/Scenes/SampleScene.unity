@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6053,7 +6053,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3329091108917980439, guid: 6de09eb2c95781b44a86948280d16ded, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -26.73
+      value: 1.64
       objectReference: {fileID: 0}
     - target: {fileID: 3329091108917980439, guid: 6de09eb2c95781b44a86948280d16ded, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6061,7 +6061,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3329091108917980439, guid: 6de09eb2c95781b44a86948280d16ded, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24.22
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 3329091108917980439, guid: 6de09eb2c95781b44a86948280d16ded, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6095,6 +6095,10 @@ PrefabInstance:
       propertyPath: zombie
       value: 
       objectReference: {fileID: 7888517628636437212, guid: e7df2a8043805554e9366c8ab731ce10, type: 3}
+    - target: {fileID: 3329091108917980456, guid: 6de09eb2c95781b44a86948280d16ded, type: 3}
+      propertyPath: zombieSpawnTimeMax
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3329091108917980457, guid: 6de09eb2c95781b44a86948280d16ded, type: 3}
       propertyPath: m_Name
       value: EnemySpawner
