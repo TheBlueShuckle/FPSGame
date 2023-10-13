@@ -22,14 +22,14 @@ public class PlayerMotor : MonoBehaviour
 
     private float speed;
 
-    private bool isGrounded;
-    private bool isCrouched;
-    private bool isSprinting;
-    private bool isSliding = false;
+    public bool IsGrounded { get; private set; }
+    public bool IsCrouched { get; private set; }
+    public bool IsSprinting { get; private set; }
+    public bool isSliding { get; private set; }
 
     [Header("Slide")]
     public float slideSpeed = 20;
-    public float slideTimerMax = 2.5f; // time while sliding
+    public float slideTimerMax = 2.5f;
     private Vector3 slideForward;
     private float slideTimer = 0.0f;
 
@@ -37,11 +37,12 @@ public class PlayerMotor : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        isSliding = false;
     }
 
     void Update()
     {
-        isGrounded = controller.isGrounded;
+        IsGrounded = controller.isGrounded;
         SetSpeed();
 
         if (lerpCrouch && !isSliding)
@@ -50,7 +51,7 @@ public class PlayerMotor : MonoBehaviour
             float p = crouchTimer / 1;
             p *= p;
 
-            if (isCrouched)
+            if (IsCrouched)
             {
                 controller.height = Mathf.Lerp(controller.height, 1, p);
             }
@@ -103,7 +104,7 @@ public class PlayerMotor : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
 
-        if (isGrounded && velocity.y < 0f)
+        if (IsGrounded && velocity.y < 0f)
         {
             velocity.y = -2f;
         }
@@ -118,12 +119,12 @@ public class PlayerMotor : MonoBehaviour
             speed = slideSpeed;
         }
 
-        else if (isCrouched)
+        else if (IsCrouched)
         {
             speed = crouchSpeed;
         }
 
-        else if (isSprinting)
+        else if (IsSprinting)
         {
             speed = sprintSpeed;
         }
@@ -138,7 +139,7 @@ public class PlayerMotor : MonoBehaviour
 
     public void Jump()
     {
-        if (isGrounded)
+        if (IsGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -3f * gravity);
         }
@@ -146,11 +147,11 @@ public class PlayerMotor : MonoBehaviour
 
     public void Crouch()
     {
-        isCrouched = !isCrouched;
+        IsCrouched = !IsCrouched;
         crouchTimer = 0;
         lerpCrouch = true;
 
-        if (isCrouched && isSprinting && isGrounded)
+        if (IsCrouched && IsSprinting && IsGrounded)
         {
             Slide();
         }
@@ -159,7 +160,7 @@ public class PlayerMotor : MonoBehaviour
     private void Slide()
     {
         isSliding = true;
-        isSprinting = false;
+        IsSprinting = false;
         speed = slideSpeed;
         slideTimer = 0;
         slideForward = transform.forward;
@@ -169,15 +170,15 @@ public class PlayerMotor : MonoBehaviour
     {
         if (input.y > 0)
         {
-            isSprinting = true;
-            isCrouched = false;
+            IsSprinting = true;
+            IsCrouched = false;
             lerpCrouch = true;
         }
     }
 
     public void StopSprint()
     {
-        isSprinting = false;
+        IsSprinting = false;
     }
 
     public void UpdateSprinting(Vector2 input)

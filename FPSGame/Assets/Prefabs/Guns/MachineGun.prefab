@@ -2843,8 +2843,8 @@ MonoBehaviour:
   magSize: 150
   bulletsPerTap: 1
   rapidFire: 1
-  damageMax: 3
-  damageMin: 1
+  damageMax: 10
+  damageMin: 3
   damageDropOffStart: 30
   damageDropOffEnd: 50
   rangeMax: 100
