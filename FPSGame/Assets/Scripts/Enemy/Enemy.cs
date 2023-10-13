@@ -22,9 +22,12 @@ public class Enemy : MonoBehaviour
 
     [Header("Sight Values")]
     public float sightDistance = 20f;
-    public float senseDistance = 40f;
     public float fieldOfView = 85f;
     public float eyeHeight;
+    public float senseDistanceRunning = 40f;
+    public float senseDistanceWalking = 30f;
+    private float senseDistance;
+
 
     [Header("Attack")]
     [SerializeField] private float meleeRange = 2f;
@@ -51,6 +54,21 @@ public class Enemy : MonoBehaviour
     public bool CanSensePlayer()
     {
         if (player == null)
+        {
+            return false;
+        }
+
+        if (player.GetComponent<PlayerMotor>().IsSprinting)
+        {
+            senseDistance = senseDistanceRunning;
+        }
+
+        else if (!player.GetComponent<PlayerMotor>().IsCrouched)
+        {
+            senseDistance = senseDistanceWalking;
+        }
+
+        else
         {
             return false;
         }
@@ -118,6 +136,7 @@ public class Enemy : MonoBehaviour
 
         else
         {
+            damageCooldownSeconds = damageCooldownTotalSeconds;
             agent.SetDestination(player.transform.position);
         }
     }
