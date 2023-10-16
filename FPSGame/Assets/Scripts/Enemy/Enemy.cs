@@ -150,6 +150,11 @@ public class Enemy : MonoBehaviour
             player.GetComponent<PlayerHealth>().TakeDamage(damage);
             damageCooldownSeconds = 0;
         }
+
+        if (player.GetComponent<PlayerHealth>().Health <= 0)
+        {
+            player = null;
+        }
     }
 
     private void ChangeSpeed()
