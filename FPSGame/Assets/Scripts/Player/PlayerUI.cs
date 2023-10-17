@@ -9,6 +9,8 @@ public class PlayerUI : MonoBehaviour
     private TextMeshProUGUI promptText;
     [SerializeField]
     private TextMeshProUGUI ammoText;
+    [SerializeField]
+    private TextMeshProUGUI pointText;
 
     private Gun gun;
 
@@ -18,6 +20,8 @@ public class PlayerUI : MonoBehaviour
         {
             gun = gameObject.GetComponentInChildren<Gun>();
         }
+
+        PointCounter.ResetPoints();
     }
 
     private void Update()
@@ -36,6 +40,7 @@ public class PlayerUI : MonoBehaviour
         }
 
         UpdateAmmoText();
+        UpdatePointText();
     }
 
     public void UpdatePromptMessage(string promptMessage)
@@ -52,5 +57,10 @@ public class PlayerUI : MonoBehaviour
         }
 
         ammoText.text = "";
+    }
+
+    public void UpdatePointText()
+    {
+        pointText.text = $"Points: {PointCounter.Points}";
     }
 }
