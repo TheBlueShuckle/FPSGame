@@ -12,8 +12,7 @@ public class Enemy : MonoBehaviour
     public NavMeshAgent Agent { get => agent; }
     public Path path;
 
-    [SerializeField] // for debugging
-    private string currentState;
+    [SerializeField] private string currentState;
     private GameObject player;
 
     [Header("Speeds")]
@@ -31,7 +30,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Attack")]
     [SerializeField] private float meleeRange = 2f;
-    [SerializeField] private float damage = 10f;
+    [SerializeField] private float damage = 5f;
     [SerializeField] private float damageCooldownTotalSeconds = 1;
     private float damageCooldownSeconds = 0;
 

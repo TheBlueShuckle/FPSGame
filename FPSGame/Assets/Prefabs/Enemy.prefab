@@ -436,7 +436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498e328a51aa31b4f96587907640a991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: {fileID: 0}
+  path: {fileID: 2886787570420917559, guid: 5d39441164232cb4682d7680f5290f31, type: 3}
   currentState: 
   patrolSpeed: 3.5
   chaseSpeed: 5

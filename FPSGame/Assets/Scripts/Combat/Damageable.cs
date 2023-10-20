@@ -37,6 +37,7 @@ public class Damageable : MonoBehaviour
 
         if (transform.CompareTag("Enemy"))
         {
+            EnemyCounter.RemoveEnemy();
             PointCounter.AddPoints(10);
         }
 
