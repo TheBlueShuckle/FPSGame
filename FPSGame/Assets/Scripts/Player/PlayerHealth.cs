@@ -1,42 +1,41 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     [Header("Health Bar")]
-    public Image frontHealthBar;
-    public Image backHealthBar;
-    public float maxHealth = 100f;
-    public float chipSpeed = 2f;
+    [SerializeField] private Image frontHealthBar;
+    [SerializeField] private Image backHealthBar;
+    [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private float chipSpeed = 2f;
 
-    private float health;
+    public float Health { get; private set; }
     private float lerpTimer;
 
     [Header("Damage Overlay")]
-    public Image overlay;
-    public float duration;
-    public float fadeSpeed;
+    [SerializeField] private Image overlay;
+    [SerializeField] private float duration;
+    [SerializeField] private float fadeSpeed;
 
-    private float durationTimer;
+    [SerializeField] private float deathTimerMax = 1.2f;
+    private float durationTimer = 0;
+    private float deathTimer = 0;
 
     void Start()
     {
-        health = maxHealth;
+        Health = maxHealth;
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 0);
     }
 
     void Update()
     {
-        health = Mathf.Clamp(health, 0, maxHealth);
+        Health = Mathf.Clamp(Health, 0, maxHealth);
         UpdateHealth();
 
-        if (overlay.color.a > 0)
+        if (overlay.color.a > 0 && Health > 20)
         {
-            if(health < 20)
-            {
-                return;
-            }
-
             durationTimer += Time.deltaTime;
 
             if (durationTimer > duration)
@@ -46,13 +45,18 @@ public class PlayerHealth : MonoBehaviour
                 overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, tempAlpha);
             }
         }
+
+        if (Health <= 0)
+        {
+            Die();
+        }
     }
 
     public void UpdateHealth()
     {
         float fillF = frontHealthBar.fillAmount;
         float fillB = backHealthBar.fillAmount;
-        float hFraction = health / maxHealth;
+        float hFraction = Health / maxHealth;
 
         if (fillB > hFraction)
         {
@@ -77,7 +81,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
+        Health -= damage;
         lerpTimer = 0f;
         durationTimer = 0f;
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 1);
@@ -85,7 +89,19 @@ public class PlayerHealth : MonoBehaviour
 
     public void RestoreHealth(float healAmount)
     {
-        health += healAmount;
+        Health += healAmount;
         lerpTimer = 0f;
+    }
+
+    public void Die()
+    {
+        GetComponent<InputManager>().enabled = false;
+
+        deathTimer += Time.deltaTime;
+
+        if (deathTimer >= deathTimerMax)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }
