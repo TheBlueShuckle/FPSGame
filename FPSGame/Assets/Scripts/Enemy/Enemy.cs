@@ -10,7 +10,6 @@ public class Enemy : MonoBehaviour
     private StateMachine stateMachine;
     private NavMeshAgent agent;
     public NavMeshAgent Agent { get => agent; }
-    public Path path;
 
     [SerializeField] private string currentState;
     private GameObject player;

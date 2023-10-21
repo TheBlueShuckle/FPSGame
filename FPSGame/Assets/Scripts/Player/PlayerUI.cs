@@ -13,8 +13,6 @@ public class PlayerUI : MonoBehaviour
     private TextMeshProUGUI pointText;
     [SerializeField]
     private TextMeshProUGUI currentRoundText;
-    [SerializeField]
-    private GameObject roundHandlerGO;
 
     private Gun gun;
     private RoundHandler roundHandler;
@@ -26,7 +24,7 @@ public class PlayerUI : MonoBehaviour
             gun = gameObject.GetComponentInChildren<Gun>();
         }
 
-        roundHandler = roundHandlerGO.GetComponent<RoundHandler>();
+        roundHandler = GameObject.Find("RoundHandler").GetComponent<RoundHandler>();
 
         PointCounter.ResetPoints();
     }

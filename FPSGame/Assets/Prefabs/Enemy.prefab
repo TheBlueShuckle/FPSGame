@@ -377,8 +377,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8877005007238020824}
   - component: {fileID: 3294160859082409033}
-  - component: {fileID: 7994878633464848186}
   - component: {fileID: 4469187524533751258}
+  - component: {fileID: 1461048934956172474}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -424,7 +424,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7994878633464848186
+--- !u!114 &4469187524533751258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7888517628636437212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 323e461b334505647bb6d2afa476d05d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1461048934956172474
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -448,18 +460,6 @@ MonoBehaviour:
   meleeRange: 2
   damage: 5
   damageCooldownTotalSeconds: 1
---- !u!114 &4469187524533751258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7888517628636437212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 323e461b334505647bb6d2afa476d05d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8904653828942885391
 GameObject:
   m_ObjectHideFlags: 0
