@@ -144,7 +144,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d05ba9c2997615e45a79a7c645c7253d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -345,7 +345,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d05ba9c2997615e45a79a7c645c7253d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -448,7 +448,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498e328a51aa31b4f96587907640a991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: {fileID: 2886787570420917559, guid: 5d39441164232cb4682d7680f5290f31, type: 3}
   currentState: 
   patrolSpeed: 3.5
   chaseSpeed: 5
