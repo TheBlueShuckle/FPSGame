@@ -79,7 +79,7 @@ public class InputManager : MonoBehaviour
     {
         if (gun != null)
         {
-            fireCoroutine = StartCoroutine(gun.RapidFire());
+            fireCoroutine = StartCoroutine(gun.fire());
             gun.IsShooting(true);
         }
     }

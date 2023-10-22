@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -14,6 +15,7 @@ public class Gun : MonoBehaviour
     [SerializeField] int magSize;
     [SerializeField] int bulletsPerTap;
     [SerializeField] bool rapidFire;
+    [SerializeField] int bulletSpeed;
 
     [Header("Damage")]
     [SerializeField] int damageMax;
@@ -37,10 +39,12 @@ public class Gun : MonoBehaviour
     private bool isRunning = false;
 
     [Header("References")]
-    Transform cam;
     [SerializeField] RaycastHit hit;
     [SerializeField] LayerMask enemy;
     [SerializeField] GameObject muzzleFlash;
+    [SerializeField] GameObject gunbarrel;
+
+    Transform cam;
 
     WaitForSeconds rapidFireWait;
     WaitForSeconds reloadWait;
@@ -75,15 +79,10 @@ public class Gun : MonoBehaviour
             AddSpread();
             muzzleFlash.SetActive(true);
 
-            if (Physics.Raycast(cam.position, shootDirection, out hit, rangeMax))
-            {
-                if (hit.collider.GetComponent<Damageable>() != null)
-                {
-                    int calcDamage;
-                    hit.collider.GetComponent<Damageable>().TakeDamage(calcDamage = GetDamageDropoff(hit.distance), hit.point, hit.normal);
-                    print($"Dealt {calcDamage} damage");
-                }
-            }
+            GameObject bullet = GameObject.Instantiate(Resources.Load("Prefabs/Bullet") as GameObject, gunbarrel.transform.position, transform.rotation);
+
+            bullet.GetComponent<Bullet>().AssignValues(damageMax, damageMin, damageDropOffStart, damageDropOffEnd, rangeMax);
+            bullet.GetComponent<Rigidbody>().velocity = shootDirection * bulletSpeed;
         }
     }
 
@@ -105,7 +104,7 @@ public class Gun : MonoBehaviour
         shootDirection = cam.transform.forward + new Vector3(x, y, 0);
     }
 
-    public IEnumerator RapidFire()
+    public IEnumerator fire()
     {
         if (CanShoot())
         {
@@ -185,24 +184,5 @@ public class Gun : MonoBehaviour
         StopAllCoroutines();
         IsShooting(false);
         muzzleFlash.SetActive(false);
-    }
-
-    private int GetDamageDropoff(float distance)
-    {
-        if (distance <= damageDropOffStart)
-        {
-            return damageMax;
-        }
-
-        if (distance >= damageDropOffEnd)
-        {
-            return damageMin;
-        }
-
-        float dropOffRange = damageDropOffEnd - damageDropOffStart;
-
-        float distanceNormalised = (distance - damageDropOffStart) / dropOffRange;
-
-        return Mathf.RoundToInt(Mathf.Lerp(damageMax, damageMin, distanceNormalised));
     }
 }

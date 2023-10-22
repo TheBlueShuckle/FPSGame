@@ -36,6 +36,7 @@ Transform:
   m_Children:
   - {fileID: 202778839539192468}
   - {fileID: 202778839864617937}
+  - {fileID: 5301460944025221301}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -57,6 +58,7 @@ MonoBehaviour:
   magSize: 150
   bulletsPerTap: 1
   rapidFire: 1
+  bulletSpeed: 40
   damageMax: 25
   damageMin: 5
   damageDropOffStart: 20
@@ -68,6 +70,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   muzzleFlash: {fileID: 202778839865047025}
+  gunbarrel: {fileID: 568560593993072544}
 --- !u!65 &202778840152106854
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -157,6 +160,37 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &568560593993072544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5301460944025221301}
+  m_Layer: 0
+  m_Name: Barrel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5301460944025221301
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568560593993072544}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.163, z: 0.721}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 202778840152106848}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &202778839539320852
 PrefabInstance:
   m_ObjectHideFlags: 0
