@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 202778840152106852}
   - component: {fileID: 202778840152106859}
   - component: {fileID: 202778840152106858}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: NerfGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 202778840152106857}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.7, y: 0.63, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 202778839539192468}
@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 25
   spread: 0.03
-  reloadTime: 5
+  reloadTime: 0.5
   magSize: 150
   bulletsPerTap: 1
   rapidFire: 1
@@ -79,8 +79,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.34, z: 1.1}
-  m_Center: {x: 0, y: 0.1, z: 0.27}
+  m_Size: {x: 0.1, y: 0.48, z: 1.54}
+  m_Center: {x: 0, y: 0.09, z: 0.05}
 --- !u!54 &202778840152106853
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -168,21 +168,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: WFX_Demo_M4
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 7350c439920074a58a63ca710c013777, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7350c439920074a58a63ca710c013777, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7350c439920074a58a63ca710c013777, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.5
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7350c439920074a58a63ca710c013777, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.5
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7350c439920074a58a63ca710c013777, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7350c439920074a58a63ca710c013777, type: 3}
       propertyPath: m_LocalPosition.x
@@ -194,7 +198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7350c439920074a58a63ca710c013777, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.248
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7350c439920074a58a63ca710c013777, type: 3}
       propertyPath: m_LocalRotation.w
@@ -247,6 +251,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: WFX_MF FPS RIFLE2
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -257,11 +277,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.122
+      value: 0.162
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.798
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
       propertyPath: m_LocalRotation.w

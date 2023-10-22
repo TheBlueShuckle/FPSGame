@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PickUpController : MonoBehaviour
 {
+    static int Interactable = 7, Weapons = 9;
+
     [SerializeField] public Gun gun;
     [SerializeField] public Rigidbody rb;
     [SerializeField] public BoxCollider coll;
@@ -32,7 +34,8 @@ public class PickUpController : MonoBehaviour
             gun.enabled = false;
             rb.isKinematic = false;
             coll.isTrigger = false;
-            gameObject.layer = 7;
+
+            SetLayerAllChildren(transform, Interactable);
         }
 
         else
@@ -41,6 +44,8 @@ public class PickUpController : MonoBehaviour
             rb.isKinematic = true;
             coll.isTrigger = true;
             slotFull = true;
+
+            SetLayerAllChildren(transform, Weapons);
         }
     }
 
@@ -62,7 +67,7 @@ public class PickUpController : MonoBehaviour
 
             gun.enabled = true;
 
-            gameObject.layer = 0;
+            SetLayerAllChildren(transform, Weapons);
         }
     }
 
@@ -84,7 +89,32 @@ public class PickUpController : MonoBehaviour
 
             gun.enabled = false;
 
-            gameObject.layer = 7;
+            SetLayerAllChildren(transform, Interactable);
+        }
+    }
+
+    private void SetGameLayerRecursive(GameObject gameObject, int layer)
+    {
+        gameObject.layer = layer;
+
+        foreach (Transform child in gameObject.transform)
+        {
+            child.gameObject.layer = layer;
+
+            Transform hasChildren = child.GetComponent<Transform>();
+            if (hasChildren != null)
+            {
+                SetGameLayerRecursive(child.gameObject, layer);
+            }
+        }
+    }
+
+    private void SetLayerAllChildren(Transform root, int layer)
+    {
+        Transform[] children = root.GetComponentsInChildren<Transform>(includeInactive: true);
+        foreach (Transform child in children)
+        {
+            child.gameObject.layer = layer;
         }
     }
 
