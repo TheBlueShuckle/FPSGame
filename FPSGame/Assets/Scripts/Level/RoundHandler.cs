@@ -41,6 +41,7 @@ public class RoundHandler : MonoBehaviour
 
             if (graceTimer.IsDone())
             {
+                print("spawning zombies");
                 currentRound++;
                 CalculateZombiesPerSpawner(zombiesPerRound[currentRound]);
 
@@ -54,6 +55,7 @@ public class RoundHandler : MonoBehaviour
             if (zombiesPerSpawner.Sum() <= 0)
             {
                 spawnTimer = null;
+                print("round won");
             }
 
             else if (spawnTimer.IsDone())
