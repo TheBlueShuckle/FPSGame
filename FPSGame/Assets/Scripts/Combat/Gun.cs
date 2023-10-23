@@ -79,10 +79,15 @@ public class Gun : MonoBehaviour
             AddSpread();
             muzzleFlash.SetActive(true);
 
-            GameObject bullet = GameObject.Instantiate(Resources.Load("Prefabs/Bullet") as GameObject, gunbarrel.transform.position, transform.rotation);
-
-            bullet.GetComponent<Bullet>().AssignValues(damageMax, damageMin, damageDropOffStart, damageDropOffEnd, rangeMax);
-            bullet.GetComponent<Rigidbody>().velocity = shootDirection * bulletSpeed;
+            if (Physics.Raycast(cam.position, shootDirection, out hit, rangeMax))
+            {
+                if (hit.collider.GetComponent<Damageable>() != null)
+                {
+                    int calcDamage;
+                    hit.collider.GetComponent<Damageable>().TakeDamage(calcDamage = GetDamageDropoff(hit.distance), hit.point, hit.normal);
+                    print($"Dealt {calcDamage} damage");
+                }
+            }
         }
     }
 
@@ -184,5 +189,24 @@ public class Gun : MonoBehaviour
         StopAllCoroutines();
         IsShooting(false);
         muzzleFlash.SetActive(false);
+    }
+
+    private int GetDamageDropoff(float distance)
+    {
+        if (distance <= damageDropOffStart)
+        {
+            return damageMax;
+        }
+
+        if (distance >= damageDropOffEnd)
+        {
+            return damageMin;
+        }
+
+        float dropOffRange = damageDropOffEnd - damageDropOffStart;
+
+        float distanceNormalised = (distance - damageDropOffStart) / dropOffRange;
+
+        return Mathf.RoundToInt(Mathf.Lerp(damageMax, damageMin, distanceNormalised));
     }
 }

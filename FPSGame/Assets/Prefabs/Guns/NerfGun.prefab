@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c433960f4ab93a40b92a6826d24b059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 25
+  fireRate: 20
   spread: 0.03
   reloadTime: 0.5
   magSize: 150
