@@ -9,7 +9,11 @@ using UnityEngine;
 public class RoundHandler : MonoBehaviour
 {
     [SerializeField] private int spawnCap;
+    [SerializeField] private RoundData roundData;
     [SerializeField] GameObject[] spawners;
+
+    [SerializeField] int graceTimeMax;
+    [SerializeField] int spawnTimerMax;
 
     public int CurrentRound { get => currentRound; }
 
@@ -22,29 +26,26 @@ public class RoundHandler : MonoBehaviour
     private Timer graceTimer;
     private Timer spawnTimer;
 
-    private int spawnTimerMax = 2;
-    private int graceTimeMax = 10;
-
-    private void Awake()
-    {
-        AssignZombiesPerRound();
-    }
-
     private void Update()
     {
+        print(EnemyCounter.GetEnemyCount());
+
         graceTimer?.Update(Time.deltaTime);
         spawnTimer?.Update(Time.deltaTime);
 
-        if (EnemyCounter.GetEnemyCount() == 0 && zombiesPerSpawner.Sum() <= 0)
+        if (EnemyCounter.GetEnemyCount() <= 0 && zombiesPerSpawner.Sum() <= 0)
         {
+            print("round won");
+
             graceTimer ??= new Timer(graceTimeMax);
 
             if (graceTimer.IsDone())
             {
                 print("spawning zombies");
                 currentRound++;
-                CalculateZombiesPerSpawner(zombiesPerRound[currentRound]);
+                CalculateZombiesPerSpawner(roundData.enemiesPerRound[currentRound]);
 
+                currentSpawner = 0;
                 graceTimer = null;
                 spawnTimer = new Timer(0);
             }
@@ -55,7 +56,6 @@ public class RoundHandler : MonoBehaviour
             if (zombiesPerSpawner.Sum() <= 0)
             {
                 spawnTimer = null;
-                print("round won");
             }
 
             else if (spawnTimer.IsDone())
@@ -106,18 +106,5 @@ public class RoundHandler : MonoBehaviour
 
             zombiesThisRound--;
         }
-    }
-
-    private void AssignZombiesPerRound()
-    {
-        zombiesPerRound = new int[7];
-
-        zombiesPerRound[0] = 0;
-        zombiesPerRound[1] = 10;
-        zombiesPerRound[2] = 12;
-        zombiesPerRound[3] = 15;
-        zombiesPerRound[4] = 17;
-        zombiesPerRound[5] = 19;
-        zombiesPerRound[6] = 20;
     }
 }

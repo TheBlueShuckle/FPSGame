@@ -8,41 +8,21 @@ using UnityEngine.InputSystem;
 
 public class Gun : MonoBehaviour
 {
-    [Header("Gun stats")]
-    [SerializeField] float fireRate;
-    [SerializeField] float spread;
-    [SerializeField] float reloadTime;
-    [SerializeField] int magSize;
-    [SerializeField] int bulletsPerTap;
-    [SerializeField] bool rapidFire;
-    [SerializeField] int bulletSpeed;
+    [Header("References")]
+    [SerializeField] GunData gunData;
+    [SerializeField] RaycastHit hit;
+    [SerializeField] LayerMask enemy;
+    [SerializeField] GameObject muzzleFlashHolder;
+    [SerializeField] GameObject muzzleFlash;
 
-    [Header("Damage")]
-    [SerializeField] int damageMax;
-    [SerializeField] int damageMin;
-    [SerializeField] float damageDropOffStart;
-    [SerializeField] float damageDropOffEnd;
-    [SerializeField] float rangeMax;
-
-    [Header("Camera Shake")]
-    [SerializeField] float secondsDuration;
-    [SerializeField] float magnitude;
     CameraShake cameraShake;
 
     private int currentAmmo;
     private float tempSpread;
     private Vector3 shootDirection;
 
-    // bools
-    private bool reloading;
-    private bool isShooting = false; 
+    private bool isReloading = false;
     private bool isRunning = false;
-
-    [Header("References")]
-    [SerializeField] RaycastHit hit;
-    [SerializeField] LayerMask enemy;
-    [SerializeField] GameObject muzzleFlash;
-    [SerializeField] GameObject gunbarrel;
 
     Transform cam;
 
@@ -54,32 +34,24 @@ public class Gun : MonoBehaviour
         cam = GameObject.Find("PlayerCamera").transform;
         cameraShake = cam.GetComponent<CameraShake>();
 
-        rapidFireWait = new WaitForSeconds(1 / fireRate);
-        reloadWait = new WaitForSeconds(reloadTime);
-        muzzleFlash.SetActive(false);
-        currentAmmo = magSize;
-        reloading = false;
-    }
-
-    private void Update()
-    {
-        if (!isShooting)
-        {
-            muzzleFlash.SetActive(false);
-        }
+        rapidFireWait = new WaitForSeconds(1 / ConvertRPMtoSeconds(gunData.roundsPerMinute));
+        reloadWait = new WaitForSeconds(gunData.reloadTime);
+        currentAmmo = gunData.magSize;
     }
 
     public void Shoot()
     {
         currentAmmo--;
-        StartCoroutine(cameraShake.Shake(secondsDuration, magnitude));
+        StartCoroutine(cameraShake.Shake(gunData.shakeDurationSeconds, gunData.shakeMagnitude));
 
-        for (int i = 0; i < bulletsPerTap; i++)
+        GameObject gm = Instantiate(muzzleFlash, muzzleFlashHolder.transform.position, cam.rotation);
+        gm.transform.parent = muzzleFlashHolder.transform;
+
+        for (int i = 0; i < gunData.bulletsPerTap; i++)
         {
             AddSpread();
-            muzzleFlash.SetActive(true);
 
-            if (Physics.Raycast(cam.position, shootDirection, out hit, rangeMax))
+            if (Physics.Raycast(cam.position, shootDirection, out hit, gunData.rangeMax))
             {
                 if (hit.collider.GetComponent<Damageable>() != null)
                 {
@@ -95,12 +67,12 @@ public class Gun : MonoBehaviour
     {
         if (isRunning)
         {
-            tempSpread = spread * 2;
+            tempSpread = gunData.spread * 2;
         }
 
         else
         {
-            tempSpread = spread;
+            tempSpread = gunData.spread;
         }
 
         float x = Random.Range(-tempSpread, tempSpread);
@@ -115,14 +87,17 @@ public class Gun : MonoBehaviour
         {
             Shoot();
 
-            if (rapidFire)
+            if (gunData.rapidFire)
             {
                 while (CanShoot())
                 {
                     yield return rapidFireWait;
                     Shoot();
                 }
+            }
 
+            if (currentAmmo <= 0)
+            {
                 StartCoroutine(Reload());
             }
         }
@@ -135,35 +110,39 @@ public class Gun : MonoBehaviour
 
     public IEnumerator Reload()
     {
-        if (currentAmmo == magSize)
+        if (isReloading)
         {
-            yield return null;
+            yield break;
+        }
+
+        if (currentAmmo == gunData.magSize)
+        {
+            yield break;
         }
 
         else
         {
-            reloading = true;
-            isShooting = false;
+            isReloading = true;
 
             print("reloading");
 
             yield return reloadWait;
-            currentAmmo = magSize;
+            currentAmmo = gunData.magSize;
 
             print("finished reloading");
 
-            reloading = false;
+            isReloading = false;
         }
     }
 
     private bool CanShoot()
     {
-        return currentAmmo > 0 && !reloading;
+        return currentAmmo > 0 && !isReloading;
     }
 
     public string GetAmmoLeftRatio()
     {
-        return new string(currentAmmo + "/" + magSize);
+        return new string(currentAmmo + "/" + gunData.magSize);
     }
 
     public void isMoving(Vector2 input)
@@ -179,34 +158,33 @@ public class Gun : MonoBehaviour
         }
     }
 
-    public void IsShooting(bool isShooting)
-    {
-        this.isShooting = isShooting;
-    }
-
     public void OnDrop()
     {
         StopAllCoroutines();
-        IsShooting(false);
-        muzzleFlash.SetActive(false);
+        isReloading = false;
     }
 
     private int GetDamageDropoff(float distance)
     {
-        if (distance <= damageDropOffStart)
+        if (distance <= gunData.damageDropOffStart)
         {
-            return damageMax;
+            return gunData.damageMax;
         }
 
-        if (distance >= damageDropOffEnd)
+        if (distance >= gunData.damageDropOffEnd)
         {
-            return damageMin;
+            return gunData.damageMin;
         }
 
-        float dropOffRange = damageDropOffEnd - damageDropOffStart;
+        float dropOffRange = gunData.damageDropOffEnd - gunData.damageDropOffStart;
 
-        float distanceNormalised = (distance - damageDropOffStart) / dropOffRange;
+        float distanceNormalised = (distance - gunData.damageDropOffStart) / dropOffRange;
 
-        return Mathf.RoundToInt(Mathf.Lerp(damageMax, damageMin, distanceNormalised));
+        return Mathf.RoundToInt(Mathf.Lerp(gunData.damageMax, gunData.damageMin, distanceNormalised));
+    }
+
+    private float ConvertRPMtoSeconds(float RPM)
+    {
+        return RPM / 60;
     }
 }

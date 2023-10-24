@@ -39,7 +39,7 @@ public class Damageable : MonoBehaviour
             PointCounter.AddPoints(10);
         }
 
-        print(transform.parent.gameObject.name + " was destroyed");
+        isKillable = false;
         Destroy(transform.parent.gameObject);
     }
 }
