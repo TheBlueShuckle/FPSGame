@@ -65,6 +65,7 @@ public class InputManager : MonoBehaviour
         if (gun != null)
         {
             gun.isMoving(onFoot.Movement.ReadValue<Vector2>());
+            gun.GetComponent<WeaponSway>().Sway(onFoot.Look.ReadValue<Vector2>());
         }
 
         motor.UpdateSprinting(onFoot.Movement.ReadValue<Vector2>());
@@ -79,8 +80,7 @@ public class InputManager : MonoBehaviour
     {
         if (gun != null)
         {
-            fireCoroutine = StartCoroutine(gun.RapidFire());
-            gun.IsShooting(true);
+            fireCoroutine = StartCoroutine(gun.fire());
         }
     }
 
@@ -91,7 +91,6 @@ public class InputManager : MonoBehaviour
             if (fireCoroutine != null)
             {
                 StopCoroutine(fireCoroutine);
-                gun.IsShooting(false);
             }
         }
     }

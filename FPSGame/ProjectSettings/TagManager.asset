@@ -7,6 +7,8 @@ TagManager:
   - Teleporter
   - FxTemporaire
   - Enemy
+  - Path
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - Ground
   - Interactable
   - Enemy
-  - 
+  - Weapons
   - 
   - 
   - 

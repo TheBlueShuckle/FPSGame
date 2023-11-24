@@ -133,8 +133,6 @@ public class PlayerMotor : MonoBehaviour
         {
             speed = defaultSpeed;
         }
-
-        Debug.Log(speed);
     }
 
     public void Jump()
@@ -147,14 +145,18 @@ public class PlayerMotor : MonoBehaviour
 
     public void Crouch()
     {
-        IsCrouched = !IsCrouched;
-        crouchTimer = 0;
-        lerpCrouch = true;
-
-        if (IsCrouched && IsSprinting && IsGrounded)
+        if (IsGrounded)
         {
-            Slide();
+            IsCrouched = !IsCrouched;
+            crouchTimer = 0;
+            lerpCrouch = true;
+
+            if (IsCrouched && IsSprinting)
+            {
+                Slide();
+            }
         }
+
     }
 
     private void Slide()

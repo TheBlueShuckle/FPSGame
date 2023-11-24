@@ -33,13 +33,13 @@ public class Damageable : MonoBehaviour
 
     private void Die()
     {
-        print(transform.parent.gameObject.name + " was destroyed");
-
         if (transform.CompareTag("Enemy"))
         {
+            EnemyCounter.RemoveEnemy();
             PointCounter.AddPoints(10);
         }
 
+        isKillable = false;
         Destroy(transform.parent.gameObject);
     }
 }

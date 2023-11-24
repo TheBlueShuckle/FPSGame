@@ -8,8 +8,11 @@ public class PatrolState : BaseState
     public float waitTimer;
     [SerializeField] float waitTimerMax;
 
+    private Path path;
+
     public override void Enter()
     {
+        path = GameObject.FindGameObjectWithTag("Path").GetComponent<Path>();
     }
 
     public override void Perform()
@@ -28,13 +31,13 @@ public class PatrolState : BaseState
 
     public void PatrolCycle()
     {
-        if (enemy.Agent.remainingDistance < 0.2f)
+        if (enemy.Agent.remainingDistance < 1f)
         {
             waitTimer += Time.deltaTime;
 
             if (waitTimer > waitTimerMax)
             {
-                if (waypointIndex < enemy.path.waypoints.Count - 1)
+                if (waypointIndex < path.waypoints.Count - 1)
                 {
                     waypointIndex++;
                 }
@@ -44,7 +47,7 @@ public class PatrolState : BaseState
                     waypointIndex = 0;
                 }
 
-                enemy.Agent.SetDestination(enemy.path.waypoints[waypointIndex].position);
+                enemy.Agent.SetDestination(path.waypoints[waypointIndex].position);
                 waitTimer = 0;
             }
         }
