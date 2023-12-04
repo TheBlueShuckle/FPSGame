@@ -22,6 +22,7 @@ public class PlayerMotor : MonoBehaviour
 
     private float speed;
 
+    public float CurrentSpeedBuff { get; set; }
     public bool IsGrounded { get; private set; }
     public bool IsCrouched { get; private set; }
     public bool IsSprinting { get; private set; }
@@ -132,6 +133,11 @@ public class PlayerMotor : MonoBehaviour
         else
         {
             speed = defaultSpeed;
+        }
+
+        if (CurrentSpeedBuff != 0)
+        {
+            speed *= CurrentSpeedBuff;
         }
     }
 

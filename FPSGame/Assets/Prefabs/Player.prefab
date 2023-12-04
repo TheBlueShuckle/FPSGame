@@ -80,6 +80,7 @@ GameObject:
   - component: {fileID: 1847403794662539481}
   - component: {fileID: 1847403794662539480}
   - component: {fileID: 233748694}
+  - component: {fileID: 2697270166458010078}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -222,6 +223,18 @@ MonoBehaviour:
   duration: 2
   fadeSpeed: 1.5
   deathTimerMax: 1.2
+--- !u!114 &2697270166458010078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847403794662539459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ec473698324bab48854a6bee34b6463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1847403795227573873
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,6 +738,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 4917772326692270823, guid: a2502a8b19155e548800efb02cdcadc7, type: 3}
+      propertyPath: muzzleFlash
+      value: 
+      objectReference: {fileID: 341513153047395348, guid: 8e54f528f804e0a4db5ee32a870ddf70, type: 3}
+    - target: {fileID: 4917772326692270823, guid: a2502a8b19155e548800efb02cdcadc7, type: 3}
+      propertyPath: muzzleFlashHolder
+      value: 
+      objectReference: {fileID: 6456291253169412387}
     - target: {fileID: 5143207962186190635, guid: a2502a8b19155e548800efb02cdcadc7, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -751,7 +772,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5862927808791693355, guid: a2502a8b19155e548800efb02cdcadc7, type: 3}
       propertyPath: m_Name
-      value: HayMaker
+      value: Shotgun
       objectReference: {fileID: 0}
     - target: {fileID: 5862927808791693355, guid: a2502a8b19155e548800efb02cdcadc7, type: 3}
       propertyPath: m_Layer
@@ -870,5 +891,10 @@ PrefabInstance:
 --- !u!4 &4879041742669561628 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6491548999822709393, guid: a2502a8b19155e548800efb02cdcadc7, type: 3}
+  m_PrefabInstance: {fileID: 1847403794978483597}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6456291253169412387 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4628030562575676590, guid: a2502a8b19155e548800efb02cdcadc7, type: 3}
   m_PrefabInstance: {fileID: 1847403794978483597}
   m_PrefabAsset: {fileID: 0}
