@@ -5964,6 +5964,7 @@ MonoBehaviour:
   useEvents: 0
   promptMessage: Interact with ???
   speedBuffData: {fileID: 11400000, guid: ff1d11c0c681aac4d989a76eb1ad2ac8, type: 2}
+  regenBuffData: {fileID: 11400000, guid: 6f95ac916c7c22044bf2f5c157959587, type: 2}
 --- !u!1 &1949452988
 GameObject:
   m_ObjectHideFlags: 0

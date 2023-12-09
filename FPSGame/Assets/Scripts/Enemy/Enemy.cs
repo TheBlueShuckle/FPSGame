@@ -149,7 +149,7 @@ public class Enemy : MonoBehaviour
             damageCooldownSeconds = 0;
         }
 
-        if (player.GetComponent<PlayerHealth>().Health <= 0)
+        if (player.GetComponent<PlayerHealth>().health <= 0)
         {
             player = null;
         }

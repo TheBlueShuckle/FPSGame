@@ -138,6 +138,7 @@ public class PlayerMotor : MonoBehaviour
         if (CurrentSpeedBuff != 0)
         {
             speed *= CurrentSpeedBuff;
+            print("Speed increased x" + CurrentSpeedBuff);
         }
     }
 

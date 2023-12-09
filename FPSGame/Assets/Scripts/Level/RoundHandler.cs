@@ -28,14 +28,15 @@ public class RoundHandler : MonoBehaviour
 
     private void Update()
     {
-        print(EnemyCounter.GetEnemyCount());
-
         graceTimer?.Update(Time.deltaTime);
         spawnTimer?.Update(Time.deltaTime);
 
         if (EnemyCounter.GetEnemyCount() <= 0 && zombiesPerSpawner.Sum() <= 0)
         {
-            print("round won");
+            if(graceTimer == null)
+            {
+                print("round won");
+            }
 
             graceTimer ??= new Timer(graceTimeMax);
 

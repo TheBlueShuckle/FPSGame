@@ -5,6 +5,7 @@ using UnityEngine;
 public class ApplyBuff : Interactable
 {
     [SerializeField] private SpeedBuffData speedBuffData;
+    [SerializeField] private RegenBuffData regenBuffData;
     private GameObject player;
     private BuffableObject obj;
 
@@ -23,6 +24,8 @@ public class ApplyBuff : Interactable
         obj = player.gameObject.GetComponent<BuffableObject>();
 
         obj.AddBuff(new TimedSpeedBuff(speedBuffData, player));
+        obj.AddBuff(new TimedRegenBuff(regenBuffData, player));
+        print("Added buff to " + player.name);
 
         gameObject.SetActive(false);
     }

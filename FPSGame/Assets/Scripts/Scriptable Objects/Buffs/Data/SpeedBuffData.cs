@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Buffs/SpeedBuff")]
 public class SpeedBuffData : ScriptableBuff
 {
-    public float SpeedIncrease;
+    public float speedIncrease;
 
     public override TimedBuff InitializeBuff(GameObject obj)
     {

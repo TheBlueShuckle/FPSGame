@@ -16,6 +16,7 @@ public class BuffableObject : MonoBehaviour
         foreach (TimedBuff buff in buffs.Values.ToList())
         {
             buff.Tick(Time.deltaTime);
+
             if (buff.isFinished)
             {
                 buffs.Remove(buff.buff);
@@ -29,6 +30,7 @@ public class BuffableObject : MonoBehaviour
         {
             buffs[buff.buff].Activate();
         }
+
         else
         {
             buffs.Add(buff.buff, buff);

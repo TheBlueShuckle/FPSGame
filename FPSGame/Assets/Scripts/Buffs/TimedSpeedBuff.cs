@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class TimedSpeedBuff : TimedBuff
 {
     private readonly PlayerMotor playerMotor;
@@ -13,8 +14,8 @@ public class TimedSpeedBuff : TimedBuff
     protected override void ApplyEffect()
     {
         SpeedBuffData speedBuff = (SpeedBuffData)buff;
-        playerMotor.CurrentSpeedBuff = speedBuff.SpeedIncrease;
-        Debug.Log("Current buff: " + speedBuff.SpeedIncrease);
+        playerMotor.CurrentSpeedBuff = speedBuff.speedIncrease;
+        Debug.Log("Current buff: " + speedBuff.speedIncrease);
     }
 
     public override void End()

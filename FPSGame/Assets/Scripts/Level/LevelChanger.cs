@@ -12,7 +12,7 @@ public class LevelChanger : MonoBehaviour
 
     private void Update()
     {
-        if (player.GetComponent<PlayerHealth>().Health <= 0)
+        if (player.GetComponent<PlayerHealth>().health <= 0)
         {
             FadeToLevel(SceneManager.GetActiveScene().buildIndex);
         }

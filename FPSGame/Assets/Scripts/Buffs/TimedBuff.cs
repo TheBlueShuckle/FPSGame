@@ -8,6 +8,7 @@ public abstract class TimedBuff
     protected readonly GameObject obj;
     public bool isFinished;
     private float timeSinceLastTick;
+
     public ScriptableBuff buff { get; }
 
     public TimedBuff(ScriptableBuff buff, GameObject obj)
@@ -46,6 +47,7 @@ public abstract class TimedBuff
             duration += buff.SecondsDuration;
         }
     }
+
     protected abstract void ApplyEffect();
 
     protected abstract void ApplyTick();

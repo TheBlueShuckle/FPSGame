@@ -11,7 +11,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float chipSpeed = 2f;
 
-    public float Health { get; private set; }
+    public float health { get; private set; }
     private float lerpTimer;
 
     [Header("Damage Overlay")]
@@ -25,16 +25,16 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
-        Health = maxHealth;
+        health = maxHealth;
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 0);
     }
 
     void Update()
     {
-        Health = Mathf.Clamp(Health, 0, maxHealth);
+        health = Mathf.Clamp(health, 0, maxHealth);
         UpdateHealth();
 
-        if (overlay.color.a > 0 && Health > 20)
+        if (overlay.color.a > 0 && health > 20)
         {
             durationTimer += Time.deltaTime;
 
@@ -46,7 +46,7 @@ public class PlayerHealth : MonoBehaviour
             }
         }
 
-        if (Health <= 0)
+        if (health <= 0)
         {
             Die();
         }
@@ -56,7 +56,7 @@ public class PlayerHealth : MonoBehaviour
     {
         float fillF = frontHealthBar.fillAmount;
         float fillB = backHealthBar.fillAmount;
-        float hFraction = Health / maxHealth;
+        float hFraction = health / maxHealth;
 
         if (fillB > hFraction)
         {
@@ -81,7 +81,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        Health -= damage;
+        health -= damage;
         lerpTimer = 0f;
         durationTimer = 0f;
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 1);
@@ -89,8 +89,14 @@ public class PlayerHealth : MonoBehaviour
 
     public void RestoreHealth(float healAmount)
     {
-        Health += healAmount;
-        lerpTimer = 0f;
+        if (health < maxHealth)
+        {
+            health += healAmount;
+            lerpTimer = 0f;
+            return;
+        }
+
+        health = maxHealth;
     }
 
     public void Die()
