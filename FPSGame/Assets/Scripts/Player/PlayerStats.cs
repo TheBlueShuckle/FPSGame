@@ -26,4 +26,14 @@ public class PlayerStats : MonoBehaviour
         slideSpeed = playerBaseStats.slideSpeed;
         jumpHeight = playerBaseStats.jumpHeight;
     }
+
+    private void AddNumericBuff()
+    {
+
+    }
+
+    private void AddPercentageBuff()
+    {
+
+    }
 }
