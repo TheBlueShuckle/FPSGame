@@ -4,12 +4,12 @@ using Unity.VisualScripting;
 
 public class Timer
 {
-    float maxSeconds;
+    float duration;
     float currentTime = 0;
 
-    public Timer(float maxSeconds)
+    public Timer(float duration)
     {
-        this.maxSeconds = maxSeconds;
+        this.duration = duration;
     }
 
     public void Update(float deltaTime)
@@ -19,11 +19,11 @@ public class Timer
 
     public bool IsDone()
     {
-        return currentTime >= maxSeconds;
+        return currentTime >= duration;
     }
 
     public float GetTimeLeft()
     {
-        return maxSeconds - currentTime;
+        return duration - currentTime;
     }
 }
