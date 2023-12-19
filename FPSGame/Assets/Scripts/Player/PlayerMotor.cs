@@ -4,23 +4,24 @@ using UnityEngine;
 
 public class PlayerMotor : MonoBehaviour
 {
-    [Header("Speeds")]
-    public float defaultSpeed;
-    public float crouchSpeed;
-    public float sprintSpeed;
+    [Header("Stats")]
+    [SerializeField] StatData statData;
 
     [Header("Jumping")]
-    public float gravity;
-    public float jumpHeight;
+    [SerializeField] float gravity;
 
-    [Header("Crouch")]
-    public bool lerpCrouch;
-    public float crouchTimer;
+    [Header("Slide")]
+    [SerializeField] float slideTimerMax = 2.5f;
+
+    private Vector3 slideForward;
+    private float slideTimer = 0.0f;
 
     private CharacterController controller;
     private Vector3 velocity;
 
     private float speed;
+    private bool lerpCrouch;
+    private float crouchTimer;
 
     public float CurrentSpeedBuff { get; set; }
     public bool IsGrounded { get; private set; }
@@ -28,14 +29,8 @@ public class PlayerMotor : MonoBehaviour
     public bool IsSprinting { get; private set; }
     public bool isSliding { get; private set; }
 
-    [Header("Slide")]
-    public float slideSpeed = 20;
-    public float slideTimerMax = 2.5f;
-    private Vector3 slideForward;
-    private float slideTimer = 0.0f;
 
-
-    void Start()
+    void Awake()
     {
         controller = GetComponent<CharacterController>();
         isSliding = false;
@@ -76,6 +71,8 @@ public class PlayerMotor : MonoBehaviour
 
             if (slideTimer > slideTimerMax * 0.5f)
             {
+                float slideSpeed = statData.stats[StatType.SlideSpeed].Value;
+                float crouchSpeed = statData.stats[StatType.CrouchSpeed].Value;
                 speed = Mathf.Lerp(slideSpeed, crouchSpeed, slideTimer / slideTimerMax);
             }
 
@@ -117,21 +114,25 @@ public class PlayerMotor : MonoBehaviour
     {
         if (isSliding)
         {
+            float slideSpeed = statData.stats[StatType.SlideSpeed].Value;
             speed = slideSpeed;
         }
 
         else if (IsCrouched)
         {
+            float crouchSpeed = statData.stats[StatType.CrouchSpeed].Value;
             speed = crouchSpeed;
         }
 
         else if (IsSprinting)
         {
+            float sprintSpeed = statData.stats[StatType.SprintSpeed].Value;
             speed = sprintSpeed;
         }
 
         else
         {
+            float defaultSpeed = statData.stats[StatType.DefaultMovementSpeed].Value;
             speed = defaultSpeed;
         }
 
@@ -146,6 +147,7 @@ public class PlayerMotor : MonoBehaviour
     {
         if (IsGrounded)
         {
+            float jumpHeight = statData.stats[StatType.JumpHeight].Value;
             velocity.y = Mathf.Sqrt(jumpHeight * -3f * gravity);
         }
     }
@@ -170,7 +172,10 @@ public class PlayerMotor : MonoBehaviour
     {
         isSliding = true;
         IsSprinting = false;
+
+        float slideSpeed = statData.stats[StatType.SlideSpeed].Value;
         speed = slideSpeed;
+
         slideTimer = 0;
         slideForward = transform.forward;
     }

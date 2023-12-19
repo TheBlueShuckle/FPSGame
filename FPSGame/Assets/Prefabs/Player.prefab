@@ -162,14 +162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f275a5f6f43f7d641941e33be4966ba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultSpeed: 5
-  crouchSpeed: 1.5
-  sprintSpeed: 10
+  statData: {fileID: 11400000, guid: 7278c2add41033642b00019601e3a3ae, type: 2}
   gravity: -19.64
-  jumpHeight: 0.75
-  lerpCrouch: 0
-  crouchTimer: 0
-  slideSpeed: 15
   slideTimerMax: 0.5
 --- !u!114 &1847403794662539481
 MonoBehaviour:
