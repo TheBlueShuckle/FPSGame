@@ -16,6 +16,7 @@ public enum StatType {
     ReloadSpeedMultiplier,
     DamageMultiplier,
     FireRateMultiplier,
+    AmmoMultiplier,
 }
 
 [CreateAssetMenu(menuName = "Stats/Player")]
@@ -38,6 +39,7 @@ public class StatData : ScriptableObject
     public float reloadSpeedMultiplier;
     public float damageMultiplier;
     public float shootSpeedMultiplier;
+    public float ammoMultiplier;
 
     private void OnEnable()
     {
@@ -53,6 +55,7 @@ public class StatData : ScriptableObject
             { StatType.ReloadSpeedMultiplier, new PlayerStat(reloadSpeedMultiplier) },
             { StatType.DamageMultiplier, new PlayerStat(damageMultiplier) },
             { StatType.FireRateMultiplier, new PlayerStat(shootSpeedMultiplier) },
+            { StatType.AmmoMultiplier, new PlayerStat(ammoMultiplier) },
         };
     }
 }

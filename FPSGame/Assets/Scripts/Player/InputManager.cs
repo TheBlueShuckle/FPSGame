@@ -64,7 +64,7 @@ public class InputManager : MonoBehaviour
 
         if (gun != null)
         {
-            gun.isMoving(onFoot.Movement.ReadValue<Vector2>());
+            gun.IsMoving(onFoot.Movement.ReadValue<Vector2>());
             gun.GetComponent<WeaponSway>().Sway(onFoot.Look.ReadValue<Vector2>());
         }
 
@@ -80,7 +80,7 @@ public class InputManager : MonoBehaviour
     {
         if (gun != null)
         {
-            fireCoroutine = StartCoroutine(gun.fire());
+            fireCoroutine = StartCoroutine(gun.Fire());
         }
     }
 

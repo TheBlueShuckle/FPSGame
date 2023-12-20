@@ -2,13 +2,16 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor.U2D;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class Gun : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] StatData statData;
     [SerializeField] GunData gunData;
     [SerializeField] RaycastHit hit;
     [SerializeField] LayerMask enemy;
@@ -18,6 +21,9 @@ public class Gun : MonoBehaviour
     CameraShake cameraShake;
 
     private int currentAmmo;
+    private int damageMax;
+    private int damageMin;
+    private int magSize;
     private float tempSpread;
     private Vector3 shootDirection;
 
@@ -37,6 +43,46 @@ public class Gun : MonoBehaviour
         rapidFireWait = new WaitForSeconds(1 / ConvertRPMtoSeconds(gunData.roundsPerMinute));
         reloadWait = new WaitForSeconds(gunData.reloadTime);
         currentAmmo = gunData.magSize;
+
+        print(rapidFireWait.Yield());
+    }
+
+    private void Update()
+    {
+        UpdateStats();
+    }
+
+    private void UpdateStats()
+    {
+        WaitForSeconds updatedWaitForSeconds = new WaitForSeconds(1 / ConvertRPMtoSeconds(gunData.roundsPerMinute * statData.stats[StatType.FireRateMultiplier].Value));
+
+        if (rapidFireWait != updatedWaitForSeconds)
+        {
+            rapidFireWait = updatedWaitForSeconds;
+            print("updated rapidfire");
+        }
+
+        WaitForSeconds updatedReloadWait = new WaitForSeconds(1 / (gunData.reloadTime * statData.stats[StatType.ReloadSpeedMultiplier].Value));
+
+        if (reloadWait != updatedReloadWait)
+        {
+            reloadWait = updatedReloadWait;
+        }
+
+        int updatedMaxDamage = (int)(gunData.damageMax * statData.stats[StatType.DamageMultiplier].Value);
+
+        if (damageMax != updatedMaxDamage)
+        {
+            damageMax = updatedMaxDamage;
+            damageMin = (int)(gunData.damageMin * statData.stats[StatType.DamageMultiplier].Value);
+        }
+
+        int updatedMagSize = (int)(gunData.magSize * statData.stats[StatType.AmmoMultiplier].Value);
+
+        if (magSize != updatedMagSize)
+        {
+            magSize = updatedMagSize;
+        }
     }
 
     public void Shoot()
@@ -81,7 +127,7 @@ public class Gun : MonoBehaviour
         shootDirection = cam.transform.forward + new Vector3(x, y, 0);
     }
 
-    public IEnumerator fire()
+    public IEnumerator Fire()
     {
         if (CanShoot())
         {
@@ -115,7 +161,7 @@ public class Gun : MonoBehaviour
             yield break;
         }
 
-        if (currentAmmo == gunData.magSize)
+        if (currentAmmo == magSize)
         {
             yield break;
         }
@@ -127,7 +173,7 @@ public class Gun : MonoBehaviour
             print("reloading");
 
             yield return reloadWait;
-            currentAmmo = gunData.magSize;
+            currentAmmo = magSize;
 
             print("finished reloading");
 
@@ -145,7 +191,7 @@ public class Gun : MonoBehaviour
         return new string(currentAmmo + "/" + gunData.magSize);
     }
 
-    public void isMoving(Vector2 input)
+    public void IsMoving(Vector2 input)
     {
         if(input.x != 0 || input.y != 0)
         {
@@ -168,16 +214,15 @@ public class Gun : MonoBehaviour
     {
         if (distance <= gunData.damageDropOffStart)
         {
-            return gunData.damageMax;
+            return damageMax;
         }
 
         if (distance >= gunData.damageDropOffEnd)
         {
-            return gunData.damageMin;
+            return damageMin;
         }
 
         float dropOffRange = gunData.damageDropOffEnd - gunData.damageDropOffStart;
-
         float distanceNormalised = (distance - gunData.damageDropOffStart) / dropOffRange;
 
         return Mathf.RoundToInt(Mathf.Lerp(gunData.damageMax, gunData.damageMin, distanceNormalised));

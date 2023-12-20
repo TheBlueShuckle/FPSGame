@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c433960f4ab93a40b92a6826d24b059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statData: {fileID: 11400000, guid: 7278c2add41033642b00019601e3a3ae, type: 2}
   gunData: {fileID: 11400000, guid: f26af1fa12dcea741bc24e2ca12978d4, type: 2}
   enemy:
     serializedVersion: 2
