@@ -120,7 +120,7 @@ MonoBehaviour:
   enemy:
     serializedVersion: 2
     m_Bits: 256
-  muzzleFlashHolder: {fileID: 0}
+  muzzleFlashHolder: {fileID: 4628030562575676590}
   muzzleFlash: {fileID: 0}
 --- !u!54 &191005061
 Rigidbody:

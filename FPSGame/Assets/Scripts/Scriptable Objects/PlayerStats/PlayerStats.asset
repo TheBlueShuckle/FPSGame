@@ -22,3 +22,4 @@ MonoBehaviour:
   reloadSpeedMultiplier: 1
   damageMultiplier: 1
   shootSpeedMultiplier: 1
+  ammoMultiplier: 1

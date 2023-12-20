@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] Inventory inventory;
+    [SerializeField] CardPanel cardPanel;
+
+    private void Awake()
     {
-        
+        inventory.OnCardLeftClickedEvent += Equip;
+        cardPanel.OnCardLeftClickedEvent += Unequip;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Equip(Card card)
     {
-        
+        print("Equipped");
+
+        if (card.isUnlocked)
+        {
+            cardPanel.AddCard(card);
+        }
+    }
+
+    public void Unequip(Card card)
+    {
+        cardPanel.RemoveCard(card);
     }
 }

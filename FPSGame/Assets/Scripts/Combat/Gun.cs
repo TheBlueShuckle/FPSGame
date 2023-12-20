@@ -30,6 +30,9 @@ public class Gun : MonoBehaviour
     private bool isReloading = false;
     private bool isRunning = false;
 
+    private float fireRate;
+    private float reloadSpeed;
+
     Transform cam;
 
     WaitForSeconds rapidFireWait;
@@ -40,8 +43,11 @@ public class Gun : MonoBehaviour
         cam = GameObject.Find("PlayerCamera").transform;
         cameraShake = cam.GetComponent<CameraShake>();
 
-        rapidFireWait = new WaitForSeconds(1 / ConvertRPMtoSeconds(gunData.roundsPerMinute));
-        reloadWait = new WaitForSeconds(gunData.reloadTime);
+        fireRate = ConvertRPMtoSeconds(gunData.roundsPerMinute);
+        reloadSpeed = gunData.reloadTime;
+
+        rapidFireWait = new WaitForSeconds(1 / fireRate);
+        reloadWait = new WaitForSeconds(reloadSpeed);
         currentAmmo = gunData.magSize;
 
         print(rapidFireWait.Yield());
@@ -54,19 +60,20 @@ public class Gun : MonoBehaviour
 
     private void UpdateStats()
     {
-        WaitForSeconds updatedWaitForSeconds = new WaitForSeconds(1 / ConvertRPMtoSeconds(gunData.roundsPerMinute * statData.stats[StatType.FireRateMultiplier].Value));
+        float updatedFireRate = ConvertRPMtoSeconds(gunData.roundsPerMinute * statData.stats[StatType.FireRateMultiplier].Value);
 
-        if (rapidFireWait != updatedWaitForSeconds)
+        if (fireRate != updatedFireRate)
         {
-            rapidFireWait = updatedWaitForSeconds;
-            print("updated rapidfire");
+            fireRate = updatedFireRate;
+            rapidFireWait = new WaitForSeconds(1 / fireRate);
         }
 
-        WaitForSeconds updatedReloadWait = new WaitForSeconds(1 / (gunData.reloadTime * statData.stats[StatType.ReloadSpeedMultiplier].Value));
+        float updatedReloadSpeed = gunData.reloadTime * statData.stats[StatType.ReloadSpeedMultiplier].Value;
 
-        if (reloadWait != updatedReloadWait)
+        if (reloadSpeed != updatedReloadSpeed)
         {
-            reloadWait = updatedReloadWait;
+            reloadSpeed = updatedReloadSpeed;
+            reloadWait = new WaitForSeconds(reloadSpeed);
         }
 
         int updatedMaxDamage = (int)(gunData.damageMax * statData.stats[StatType.DamageMultiplier].Value);
