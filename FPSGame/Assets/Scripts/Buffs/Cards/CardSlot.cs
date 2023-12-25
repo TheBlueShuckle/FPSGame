@@ -5,25 +5,51 @@ using UnityEngine.UI;
 
 public class CardSlot : MonoBehaviour, IPointerClickHandler
 {
-    public Card card;
+    [SerializeField] protected Card card;
+    [SerializeField] protected Image image;
+
+    public Card Card
+    {
+        get { return card; }
+        set
+        {
+            card = value;
+
+            if (card != null && card.tempIsUnlocked)
+            {
+                image.sprite = card.icon;
+                image.enabled = true;
+            }
+
+            else
+            {
+                image.enabled = false;
+            }
+        }
+    }
 
     public event Action<Card> OnLeftClickEvent;
 
     protected virtual void OnValidate()
     {
-        UpdateCard();
+        if (image == null)
+        {
+            image = GetComponent<Image>();
+        }
+
+        LoadImage();
     }
 
-    protected void UpdateCard()
+    protected void LoadImage()
     {
-        if (card != null && card.isUnlocked)
+        if (Card != null && Card.tempIsUnlocked)
         {
-            GetComponent<Image>().sprite = card.icon;
+            image.sprite = Card.icon;
         }
 
         else
         {
-            GetComponent<Image>().sprite = null;
+            image.sprite = null;
         }
     }
 

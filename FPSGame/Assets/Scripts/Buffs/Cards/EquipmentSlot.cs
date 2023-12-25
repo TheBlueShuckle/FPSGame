@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,27 +6,32 @@ public class EquipmentSlot : CardSlot
 {
     public bool isOccupied;
 
-    protected override void OnValidate()
+    public new Card Card
     {
-        if (isOccupied)
-        {
-            base.OnValidate();
+        get { return card; }
+        set 
+        { 
+            card = value; 
+            
+            if (card != null && card.tempIsUnlocked)
+            {
+                isOccupied = true;
+
+                image.sprite = card.icon;
+                image.enabled = true;
+            }
+
+            else
+            {
+                isOccupied = false;
+
+                image.enabled = false;
+            }
         }
     }
 
-    public void AddCard(Card card)
+    protected override void OnValidate()
     {
-        this.card = card;
-        isOccupied = true;
-        card.isEquipped = true;
-        UpdateCard();
-    }
-
-    public void RemoveCard()
-    {
-        card.isEquipped = false;
-        card = null;
-        isOccupied = false;
-        UpdateCard();
+        base.OnValidate();
     }
 }

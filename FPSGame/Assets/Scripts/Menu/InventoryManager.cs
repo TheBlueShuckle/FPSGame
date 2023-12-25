@@ -15,16 +15,20 @@ public class InventoryManager : MonoBehaviour
 
     public void Equip(Card card)
     {
-        print("Equipped");
-
-        if (card.isUnlocked)
+        if (card.tempIsUnlocked && !card.tempIsEquipped)
         {
             cardPanel.AddCard(card);
+            print("Equipped " + card.name);
         }
+
+        inventory.RefreshInventory();
     }
 
     public void Unequip(Card card)
     {
+        print("Unequipped " + card.name);
+
         cardPanel.RemoveCard(card);
+        inventory.RefreshInventory();
     }
 }

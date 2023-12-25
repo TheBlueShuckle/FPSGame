@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public enum CardType
 {
@@ -15,8 +17,8 @@ public class Card : ScriptableObject
 {
     public new string name;
     public Sprite icon;
-    public bool isEquipped;
-    public bool isUnlocked;
+    [SerializeField] private bool isEquipped;
+    [SerializeField] private bool isUnlocked;
 
     public CardType cardType;
     public StatType statType;
@@ -25,6 +27,15 @@ public class Card : ScriptableObject
     public float value;
     public StatModificationType type;
     public int order;
+
+    [NonSerialized] public bool tempIsEquipped;
+    [NonSerialized] public bool tempIsUnlocked;
+
+    private void OnValidate()
+    {
+        Debug.Log(tempIsEquipped = isEquipped);
+        Debug.Log(tempIsUnlocked = isUnlocked);
+    }
 
     private void Awake()
     {

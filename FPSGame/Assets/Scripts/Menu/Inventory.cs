@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] List<Card> unlockedCards;
     [SerializeField] Transform itemsParent;
     [SerializeField] CardSlot[] cardSlots;
 
@@ -15,9 +14,7 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        RefreshUI();
-
-        unlockedCards = new List<Card>();
+        RefreshInventory();
 
         foreach (CardSlot cardSlot in cardSlots)
         {
@@ -33,14 +30,11 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void RefreshUI()
+    public void RefreshInventory()
     {
-        foreach (CardSlot cardSlot in cardSlots)
+        foreach (CardSlot slot in cardSlots)
         {
-            if (cardSlot.card != null && cardSlot.card.isUnlocked)
-            {
-                unlockedCards.Add(cardSlot.card);
-            }
+            //slot.UpdateImage();
         }
     }
 }
