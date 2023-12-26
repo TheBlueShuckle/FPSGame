@@ -11,17 +11,12 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] Inventory inventory;
     [SerializeField] CardPanel cardPanel;
 
-    private PlayerInput playerInputs;
-    private InputAction menu;
-
     public bool isOpen = false;
 
     private void Awake()
     {
         inventory.OnCardLeftClickedEvent += Equip;
         cardPanel.OnCardLeftClickedEvent += Unequip;
-
-        playerInputs = new PlayerInput();
     }
 
     public void Equip(Card card)
@@ -40,23 +35,25 @@ public class InventoryManager : MonoBehaviour
         cardPanel.RemoveCard(card);
     }
 
-    public void ToggleInventory()
+    public void OpenInventory()
     {
-        inventoryGO.SetActive(!inventoryGO.activeSelf);
-        postProcessing.SetActive(inventoryGO.activeSelf);
-        inGameUI.SetActive(!inventoryGO.activeSelf);
-        isOpen = inventoryGO.activeSelf;
+        inventoryGO.SetActive(true);
+        postProcessing.SetActive(true);
+        inGameUI.SetActive(false);
+        isOpen = true;
 
-        if (inventoryGO.activeSelf)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
 
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+    public void CloseInventory()
+    {
+        inventoryGO.SetActive(false);
+        postProcessing.SetActive(false);
+        inGameUI.SetActive(true);
+        isOpen = false;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }

@@ -1,5 +1,5 @@
 {
-    "name": "PlayerInput",
+    "name": "PlayerControls",
     "maps": [
         {
             "name": "OnFoot",
@@ -96,7 +96,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ToggleInventory",
+                    "name": "OpenInventory",
                     "type": "Button",
                     "id": "96321b53-63c1-444e-9971-5a99fe2773da",
                     "expectedControlType": "Button",
@@ -366,14 +366,14 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ToggleInventory",
+                    "action": "OpenInventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
             ]
         },
         {
-            "name": "Menu",
+            "name": "InInventory",
             "id": "29e7aec2-c911-4555-bd40-36bfe9bee63f",
             "actions": [
                 {
@@ -391,6 +391,17 @@
                     "name": "",
                     "id": "2022a30b-95db-4162-b8f0-56296c7c9a50",
                     "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c5c85404-22dc-4a10-a5f9-a6f743e1dbfb",
+                    "path": "<Keyboard>/i",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

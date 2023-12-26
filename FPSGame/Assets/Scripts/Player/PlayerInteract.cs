@@ -30,16 +30,19 @@ public class PlayerInteract : MonoBehaviour
         if (currentTarget != null)
         {
             playerUI.UpdatePromptMessage(currentTarget.promptMessage);
-
-            if (inputManager.onFoot.Interact.triggered)
-            {
-                currentTarget.OnInteract();
-            }
         }
 
         else
         {
             playerUI.UpdatePromptMessage(null);
+        }
+    }
+
+    public void Interact()
+    {
+        if (currentTarget != null)
+        {
+            currentTarget.OnInteract();
         }
     }
 
