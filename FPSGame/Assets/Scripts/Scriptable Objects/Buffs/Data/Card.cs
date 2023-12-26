@@ -16,6 +16,7 @@ public enum CardType
 public class Card : ScriptableObject
 {
     public new string name;
+    public string description;
     public Sprite icon;
     [SerializeField] private bool isEquipped;
     [SerializeField] private bool isUnlocked;

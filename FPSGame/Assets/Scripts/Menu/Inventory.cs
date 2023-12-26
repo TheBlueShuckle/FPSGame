@@ -14,8 +14,6 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        RefreshInventory();
-
         foreach (CardSlot cardSlot in cardSlots)
         {
             cardSlot.OnLeftClickEvent += OnCardLeftClickedEvent;
@@ -27,14 +25,6 @@ public class Inventory : MonoBehaviour
         if (itemsParent != null)
         {
             cardSlots = itemsParent.GetComponentsInChildren<CardSlot>();
-        }
-    }
-
-    public void RefreshInventory()
-    {
-        foreach (CardSlot slot in cardSlots)
-        {
-            //slot.UpdateImage();
         }
     }
 }

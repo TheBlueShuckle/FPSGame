@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,6 +8,8 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] protected Card card;
     [SerializeField] protected Image image;
+
+    protected Sprite emptySlot;
 
     public Card Card
     {
@@ -18,12 +21,11 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
             if (card != null && card.tempIsUnlocked)
             {
                 image.sprite = card.icon;
-                image.enabled = true;
             }
 
             else
             {
-                image.enabled = false;
+                image.sprite = emptySlot;
             }
         }
     }
@@ -35,7 +37,10 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
         if (image == null)
         {
             image = GetComponent<Image>();
+            image.enabled = true;
         }
+
+        emptySlot = Resources.Load<Sprite>("images/placeholders/LockedSlot");
 
         LoadImage();
     }
@@ -49,7 +54,7 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
 
         else
         {
-            image.sprite = null;
+            image.sprite = emptySlot;
         }
     }
 

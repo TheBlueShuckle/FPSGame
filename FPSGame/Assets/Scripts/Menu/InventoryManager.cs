@@ -20,8 +20,6 @@ public class InventoryManager : MonoBehaviour
             cardPanel.AddCard(card);
             print("Equipped " + card.name);
         }
-
-        inventory.RefreshInventory();
     }
 
     public void Unequip(Card card)
@@ -29,6 +27,5 @@ public class InventoryManager : MonoBehaviour
         print("Unequipped " + card.name);
 
         cardPanel.RemoveCard(card);
-        inventory.RefreshInventory();
     }
 }

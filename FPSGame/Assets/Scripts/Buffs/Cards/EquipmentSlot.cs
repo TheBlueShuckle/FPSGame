@@ -18,20 +18,27 @@ public class EquipmentSlot : CardSlot
                 isOccupied = true;
 
                 image.sprite = card.icon;
-                image.enabled = true;
             }
 
             else
             {
                 isOccupied = false;
 
-                image.enabled = false;
+                image.sprite = emptySlot;
             }
         }
     }
 
     protected override void OnValidate()
     {
-        base.OnValidate();
+        if (image == null)
+        {
+            image = GetComponent<Image>();
+            image.enabled = true;
+        }
+
+        emptySlot = Resources.Load<Sprite>("images/placeholders/EmptySlot");
+
+        LoadImage();
     }
 }
