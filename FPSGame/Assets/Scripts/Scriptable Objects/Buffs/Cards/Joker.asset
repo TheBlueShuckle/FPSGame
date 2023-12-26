@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Joker
   m_EditorClassIdentifier: 
   name: Joker
+  description: im the joker baby
   icon: {fileID: 0}
   isEquipped: 0
   isUnlocked: 0

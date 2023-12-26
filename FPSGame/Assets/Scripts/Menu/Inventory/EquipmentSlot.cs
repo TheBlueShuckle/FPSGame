@@ -37,6 +37,11 @@ public class EquipmentSlot : CardSlot
             image.enabled = true;
         }
 
+        if (description == null)
+        {
+            description = FindObjectOfType<CardDescription>();
+        }
+
         emptySlot = Resources.Load<Sprite>("images/placeholders/EmptySlot");
 
         LoadImage();

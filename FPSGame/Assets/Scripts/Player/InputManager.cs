@@ -10,6 +10,8 @@ public class InputManager : MonoBehaviour
     private PlayerInput playerInput;
     public PlayerInput.OnFootActions onFoot;
 
+    [SerializeField] private InventoryManager inventoryManager;
+
     private Gun gun;
     private PickUpController pickUpController;
 
@@ -41,11 +43,13 @@ public class InputManager : MonoBehaviour
         onFoot.SprintStart.performed += ctx => motor.StartSprint(onFoot.Movement.ReadValue<Vector2>());
         onFoot.SprintStop.performed += ctx => motor.StopSprint();
 
-        onFoot.Shoot.started += _ => StartFiring();
-        onFoot.Shoot.canceled += _ => StopFiring();
-        onFoot.Reload.performed += _ => Reload();
+        onFoot.Shoot.started += ctx => StartFiring();
+        onFoot.Shoot.canceled += ctx => StopFiring();
+        onFoot.Reload.performed += ctx => Reload();
 
-        onFoot.Drop.performed += _ => DropGun();
+        onFoot.Drop.performed += ctx => DropGun();
+
+        onFoot.ToggleInventory.performed += ctx => inventoryManager.ToggleInventory();
     }
 
     void Update()
@@ -60,13 +64,13 @@ public class InputManager : MonoBehaviour
             pickUpController = gameObject.GetComponentInChildren<PickUpController>();
         }
 
-        motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
-
         if (gun != null)
         {
             gun.IsMoving(onFoot.Movement.ReadValue<Vector2>());
             gun.GetComponent<WeaponSway>().Sway(onFoot.Look.ReadValue<Vector2>());
         }
+
+        motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
 
         motor.UpdateSprinting(onFoot.Movement.ReadValue<Vector2>());
     }
@@ -107,7 +111,7 @@ public class InputManager : MonoBehaviour
     {
         if (pickUpController != null)
         {
-            if(fireCoroutine != null)
+            if (fireCoroutine != null)
             {
                 StopCoroutine(fireCoroutine);
             }

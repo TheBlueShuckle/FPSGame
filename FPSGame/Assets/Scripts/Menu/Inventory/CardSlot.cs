@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardSlot : MonoBehaviour, IPointerClickHandler
+public class CardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] protected Card card;
     [SerializeField] protected Image image;
+    [SerializeField] protected CardDescription description;
 
     protected Sprite emptySlot;
 
@@ -40,6 +41,11 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
             image.enabled = true;
         }
 
+        if (description == null)
+        {
+            description = FindObjectOfType<CardDescription>();
+        }
+
         emptySlot = Resources.Load<Sprite>("images/placeholders/LockedSlot");
 
         LoadImage();
@@ -67,5 +73,18 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
                 OnLeftClickEvent(card);
             }
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (card != null)
+        {
+            description.ShowDescription(card);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        description.HideDescription();
     }
 }
