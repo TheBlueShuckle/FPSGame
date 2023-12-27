@@ -75,7 +75,7 @@ public class InputManager : MonoBehaviour
         if (gun != null)
         {
             gun.IsMoving(onFoot.Movement.ReadValue<Vector2>());
-            gun.GetComponent<WeaponSway>().Sway(onFoot.Movement.ReadValue<Vector2>());
+            gun.GetComponent<WeaponSway>().Sway(onFoot.Look.ReadValue<Vector2>());
         }
 
         motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());

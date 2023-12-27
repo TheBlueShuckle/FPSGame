@@ -18,7 +18,7 @@ MonoBehaviour:
   isEquipped: 0
   isUnlocked: 1
   cardType: 3
-  statType: 9
-  value: 500
-  type: 300
+  statType: 10
+  value: 50
+  type: 200
   order: 0

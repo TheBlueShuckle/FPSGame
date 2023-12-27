@@ -11,12 +11,15 @@ public class CardDescription : MonoBehaviour
 
     public void ShowDescription(Card card)
     {
-        image.sprite = card.icon;
-        cardNameText.text = card.name;
-        cardTypeText.text = card.cardType.ToString();
-        cardDescriptionText.text = card.description;
+        if (card.tempIsUnlocked)
+        {
+            image.sprite = card.icon;
+            cardNameText.text = card.name;
+            cardTypeText.text = card.cardType.ToString();
+            cardDescriptionText.text = card.description;
 
-        gameObject.SetActive(true);
+            gameObject.SetActive(true);
+        }
     }
 
     public void HideDescription()

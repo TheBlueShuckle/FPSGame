@@ -6,15 +6,15 @@ using Unity.VisualScripting;
 [Serializable]
 public class PlayerStat
 {
-    public float BaseValue;
+    public float baseValue;
 
     public virtual float Value
     {
         get
         {
-            if (valueIsOutdated || BaseValue != lastBaseValue)
+            if (valueIsOutdated || baseValue != lastBaseValue)
             {
-                lastBaseValue = BaseValue;
+                lastBaseValue = baseValue;
                 updatedValue = CalculateFinalValue();
                 valueIsOutdated = false;
             }
@@ -37,7 +37,7 @@ public class PlayerStat
 
     public PlayerStat(float baseValue) : this()
     {
-        BaseValue = baseValue;
+        this.baseValue = baseValue;
     }
 
     public virtual void AddModifier(StatModifier modifier)
@@ -113,7 +113,7 @@ public class PlayerStat
 
     protected virtual float CalculateFinalValue()
     {
-        float finalValue = BaseValue;
+        float finalValue = baseValue;
         float sumPercentAdd = 0;
 
         foreach (StatModifier statModifier in statModifiers)
@@ -130,13 +130,13 @@ public class PlayerStat
                 //If the modifier is the last one or is the last of the same type
                 if (statModifiers.IndexOf(statModifier) + 1 >= statModifiers.Count || statModifiers[statModifiers.IndexOf(statModifier) + 1].Type != StatModificationType.PercentAdd)
                 {
-                    finalValue *= 1 + sumPercentAdd;
+                    finalValue *= 1 + (sumPercentAdd / 100);
                 }
             }
 
             else if (statModifier.Type == StatModificationType.PercentMultiply)
             {
-                finalValue *= 1 + statModifier.Value;
+                finalValue *= 1 + (statModifier.Value / 100);
             }
         }
 

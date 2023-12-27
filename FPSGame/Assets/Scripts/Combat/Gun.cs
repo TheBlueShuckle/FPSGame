@@ -76,19 +76,27 @@ public class Gun : MonoBehaviour
             reloadWait = new WaitForSeconds(reloadSpeed);
         }
 
-        int updatedMaxDamage = (int)(gunData.damageMax * statData.stats[StatType.DamageMultiplier].Value);
+        float damageMultiplier = statData.stats[StatType.DamageMultiplier].Value;
+        int updatedMaxDamage = (int)(gunData.damageMax * damageMultiplier);
 
         if (damageMax != updatedMaxDamage)
         {
+            print("Current damage:" + damageMax + " Updated max: " + updatedMaxDamage + " Damage multiplier: " + damageMultiplier);
+
             damageMax = updatedMaxDamage;
-            damageMin = (int)(gunData.damageMin * statData.stats[StatType.DamageMultiplier].Value);
+            damageMin = (int)(gunData.damageMin * damageMultiplier);
         }
 
-        int updatedMagSize = (int)(gunData.magSize * statData.stats[StatType.AmmoMultiplier].Value);
+        float ammoMultiplier = statData.stats[StatType.AmmoMultiplier].Value;
+        int updatedMagSize = (int)(gunData.magSize * ammoMultiplier);
 
         if (magSize != updatedMagSize)
         {
             magSize = updatedMagSize;
+            if (currentAmmo > magSize)
+            {
+                currentAmmo = magSize;
+            }
         }
     }
 
@@ -97,8 +105,8 @@ public class Gun : MonoBehaviour
         currentAmmo--;
         StartCoroutine(cameraShake.Shake(gunData.shakeDurationSeconds, gunData.shakeMagnitude));
 
-        GameObject gm = Instantiate(muzzleFlash, muzzleFlashHolder.transform.position, cam.rotation);
-        gm.transform.parent = muzzleFlashHolder.transform;
+        GameObject muzzleFlashGO = Instantiate(muzzleFlash, muzzleFlashHolder.transform.position, cam.rotation);
+        muzzleFlashGO.transform.parent = muzzleFlashHolder.transform;
 
         for (int i = 0; i < gunData.bulletsPerTap; i++)
         {
@@ -195,7 +203,7 @@ public class Gun : MonoBehaviour
 
     public string GetAmmoLeftRatio()
     {
-        return new string(currentAmmo + "/" + gunData.magSize);
+        return new string(currentAmmo + "/" + magSize);
     }
 
     public void IsMoving(Vector2 input)

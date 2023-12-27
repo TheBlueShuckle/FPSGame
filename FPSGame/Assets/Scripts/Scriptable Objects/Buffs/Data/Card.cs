@@ -23,7 +23,29 @@ public class Card : ScriptableObject
 
     public CardType cardType;
     public StatType statType;
-    public StatModifier statModifier;
+    private StatModifier statModifier;
+
+    public StatModifier StatModifier
+    {
+        get 
+        { 
+            if (statModifier == null)
+            {
+                if (order == 0)
+                {
+                    StatModifier = new StatModifier(value, type, this);
+                }
+
+                else
+                {
+                    StatModifier = new StatModifier(value, type, order, this);
+                }
+            }
+
+            return statModifier; 
+        }
+        set { statModifier = value; }
+    }
 
     public float value;
     public StatModificationType type;
@@ -36,18 +58,5 @@ public class Card : ScriptableObject
     {
         Debug.Log(tempIsEquipped = isEquipped);
         Debug.Log(tempIsUnlocked = isUnlocked);
-    }
-
-    private void Awake()
-    {
-        if (order == 0)
-        {
-            statModifier = new StatModifier(value, type, this);
-        }
-
-        else
-        {
-            statModifier = new StatModifier(value, type, order, this);
-        }
     }
 }
