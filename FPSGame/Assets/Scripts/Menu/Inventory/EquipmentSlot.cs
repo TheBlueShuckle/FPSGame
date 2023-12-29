@@ -23,16 +23,12 @@ public class EquipmentSlot : CardSlot
             {
                 isOccupied = true;
 
-                debugText.text = gameObject.name + ": " + card.statType.ToString() + " " + card.StatModifier.Value;
-
                 image.sprite = card.icon;
             }
 
             else
             {
                 isOccupied = false;
-
-                debugText.text = gameObject.name + ": none";
 
                 image.sprite = emptySlot;
             }
@@ -55,5 +51,10 @@ public class EquipmentSlot : CardSlot
         emptySlot = Resources.Load<Sprite>("images/placeholders/EmptySlot");
 
         LoadImage();
+    }
+
+    protected override void Update()
+    {
+        
     }
 }

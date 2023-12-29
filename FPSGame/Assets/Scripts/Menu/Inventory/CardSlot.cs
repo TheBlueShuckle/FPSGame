@@ -51,6 +51,19 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         LoadImage();
     }
 
+    protected virtual void Update()
+    {
+        if (card.tempIsEquipped)
+        {
+            image.color = new Color(0.65f, 0.65f, 0.65f);
+        }
+
+        else
+        {
+            image.color = new Color(1, 1, 1);
+        }
+    }
+
     protected void LoadImage()
     {
         if (Card != null && Card.tempIsUnlocked)
