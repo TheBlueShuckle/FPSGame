@@ -50,7 +50,7 @@ public class Gun : MonoBehaviour
         reloadWait = new WaitForSeconds(reloadSpeed);
         currentAmmo = gunData.magSize;
 
-        print(rapidFireWait.Yield());
+        rapidFireWait.Yield();
     }
 
     private void Update()

@@ -56,7 +56,7 @@ public class Card : ScriptableObject
 
     private void OnValidate()
     {
-        Debug.Log(tempIsEquipped = isEquipped);
-        Debug.Log(tempIsUnlocked = isUnlocked);
+        tempIsEquipped = isEquipped;
+        tempIsUnlocked = isUnlocked;
     }
 }
