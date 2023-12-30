@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class PlayerMotor : MonoBehaviour
 
     [Header("Jumping")]
     [SerializeField] float gravity;
+    [SerializeField] float airResistance;
 
     [Header("Slide")]
     [SerializeField] float slideTimerMax = 2.5f;
@@ -18,10 +20,13 @@ public class PlayerMotor : MonoBehaviour
 
     private CharacterController controller;
     private Vector3 velocity;
+    private Vector3 storedMomentum;
 
     private float speed;
     private bool lerpCrouch;
     private float crouchTimer;
+
+    public bool jumpButtonPressed = false;
 
     public float CurrentSpeedBuff { get; set; }
     public bool IsGrounded { get; private set; }
@@ -86,28 +91,45 @@ public class PlayerMotor : MonoBehaviour
     //receive inputs for inputmanager and apply them to the character controller
     public void ProcessMove(Vector2 input)
     {
-        Vector3 moveDirection = Vector3.zero;
-        moveDirection.x = input.x;
-        moveDirection.z = input.y;
+        Vector3 moveDirection = new(input.x, 0, input.y);
+        moveDirection = transform.TransformDirection(moveDirection) * speed;
 
-        if (isSliding)
+        if (controller.isGrounded)
         {
-            controller.Move(slideForward * speed * Time.deltaTime);
+            storedMomentum = moveDirection;
         }
 
-        else
+        if (jumpButtonPressed && controller.isGrounded)
         {
-            controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
+            float jumpHeight = statData.stats[StatType.JumpHeight].Value;
+            velocity.y = Mathf.Sqrt(jumpHeight * 3f * gravity);
         }
 
-        velocity.y += gravity * Time.deltaTime;
+        jumpButtonPressed = false;
 
-        if (IsGrounded && velocity.y < 0f)
+        velocity.y -= gravity * Time.deltaTime;
+
+        if (controller.isGrounded && velocity.y < 0f)
         {
             velocity.y = -2f;
         }
 
-        controller.Move(velocity * Time.deltaTime);
+        if (controller.isGrounded)
+        {
+            moveDirection.y = velocity.y;
+            controller.Move(moveDirection * Time.deltaTime);
+        }
+
+        else if (isSliding)
+        {
+            controller.Move(speed * Time.deltaTime * slideForward);
+        }
+
+        else
+        {
+            storedMomentum.y = velocity.y;
+            controller.Move(storedMomentum * Time.deltaTime);
+        }
     }
 
     private void SetSpeed()
@@ -140,15 +162,6 @@ public class PlayerMotor : MonoBehaviour
         {
             speed *= CurrentSpeedBuff;
             print("Speed increased x" + CurrentSpeedBuff);
-        }
-    }
-
-    public void Jump()
-    {
-        if (IsGrounded)
-        {
-            float jumpHeight = statData.stats[StatType.JumpHeight].Value;
-            velocity.y = Mathf.Sqrt(jumpHeight * -3f * gravity);
         }
     }
 

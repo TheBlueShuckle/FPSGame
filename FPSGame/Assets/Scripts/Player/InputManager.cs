@@ -42,7 +42,7 @@ public class InputManager : MonoBehaviour
         look = GetComponent<PlayerLook>();
         interact = GetComponent<PlayerInteract>();
 
-        onFoot.Jump.performed += ctx => motor.Jump();
+        onFoot.Jump.performed += ctx => motor.jumpButtonPressed = true;
         onFoot.Crouch.performed += ctx => motor.Crouch();
         onFoot.SprintStart.performed += ctx => motor.StartSprint(onFoot.Movement.ReadValue<Vector2>());
         onFoot.SprintStop.performed += ctx => motor.StopSprint();
