@@ -1,7 +1,10 @@
 using System;
 using System.Runtime.CompilerServices;
 using Unity.PlasticSCM.Editor.WebApi;
+using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMotor : MonoBehaviour
 {
@@ -19,8 +22,11 @@ public class PlayerMotor : MonoBehaviour
     private float slideTimer = 0.0f;
 
     private CharacterController controller;
-    private Vector3 velocity;
-    private Vector3 storedMomentum;
+    private Vector3 storedInput;
+    private float fallingVelocity = 0.0f;
+    private float storedSpeed = 0.0f;
+    private float speedDropOffTimer = 0.0f;
+    private float speedDropOffTimerMax = 0.0f;
 
     private float speed;
     private bool lerpCrouch;
@@ -71,8 +77,19 @@ public class PlayerMotor : MonoBehaviour
 
         if (isSliding)
         {
+            float tempHeight = controller.height;
             slideTimer += Time.deltaTime;
-            controller.height = Mathf.Lerp(controller.height, 1, 5 * Time.deltaTime);
+
+            controller.height = Mathf.Lerp(controller.height, 1, slideTimer / slideTimerMax);
+
+            float totalDistanceMoved = 0.0f;
+            CollisionFlags flag = 0;
+
+            while (totalDistanceMoved < (tempHeight - controller.height)/2 && flag != CollisionFlags.Below)
+            {
+                flag = controller.Move(new Vector3(0, -0.1f, 0));
+                totalDistanceMoved += 0.1f;
+            }
 
             if (slideTimer > slideTimerMax * 0.5f)
             {
@@ -81,55 +98,100 @@ public class PlayerMotor : MonoBehaviour
                 speed = Mathf.Lerp(slideSpeed, crouchSpeed, slideTimer / slideTimerMax);
             }
 
-            if (slideTimer > slideTimerMax)
+            if (slideTimer > slideTimerMax || !controller.isGrounded)
             {
                 isSliding = false;
             }
         }
     }
 
-    //receive inputs for inputmanager and apply them to the character controller
+    //receive inputs for inputmanager and apply them to the character controller. Runs every frame
     public void ProcessMove(Vector2 input)
     {
         Vector3 moveDirection = new(input.x, 0, input.y);
-        moveDirection = transform.TransformDirection(moveDirection) * speed;
+        moveDirection = transform.TransformDirection(moveDirection);
 
         if (controller.isGrounded)
         {
-            storedMomentum = moveDirection;
+            storedInput = moveDirection;
+            storedSpeed = speed;
+
+            if (input.x == 0 && input.y == 0)
+            {
+                storedSpeed = 0.0f;
+            }
+
+            speedDropOffTimer = 0.0f;
+            speedDropOffTimerMax = Mathf.Sqrt(storedSpeed);
         }
 
-        if (jumpButtonPressed && controller.isGrounded)
+        if (jumpButtonPressed && controller.isGrounded && !isSliding)
         {
-            float jumpHeight = statData.stats[StatType.JumpHeight].Value;
-            velocity.y = Mathf.Sqrt(jumpHeight * 3f * gravity);
+            Jump();
         }
 
         jumpButtonPressed = false;
 
-        velocity.y -= gravity * Time.deltaTime;
+        fallingVelocity -= gravity * Time.deltaTime;
 
-        if (controller.isGrounded && velocity.y < 0f)
+        if (controller.isGrounded && fallingVelocity < 0.0f)
         {
-            velocity.y = -2f;
+            fallingVelocity = -2.0f;
         }
 
-        if (controller.isGrounded)
+        if (isSliding)
         {
-            moveDirection.y = velocity.y;
-            controller.Move(moveDirection * Time.deltaTime);
+            MovementSliding();
         }
 
-        else if (isSliding)
+        else if (controller.isGrounded)
         {
-            controller.Move(speed * Time.deltaTime * slideForward);
+            MovementGrounded(moveDirection);
         }
 
         else
         {
-            storedMomentum.y = velocity.y;
-            controller.Move(storedMomentum * Time.deltaTime);
+            MovementFalling();
         }
+    }
+
+    private void Jump()
+    {
+        float jumpHeight = statData.stats[StatType.JumpHeight].Value;
+        fallingVelocity = Mathf.Sqrt(jumpHeight * 3.0f * gravity);
+        IsCrouched = false;
+    }
+
+    private void MovementSliding()
+    {
+        Vector3 tempSlideForward = speed * slideForward;
+        tempSlideForward.y = fallingVelocity;
+
+        controller.Move(Time.deltaTime * tempSlideForward);
+    }
+
+    private void MovementGrounded(Vector3 moveDirection)
+    {
+        moveDirection *= speed;
+        moveDirection.y = fallingVelocity;
+        controller.Move(Time.deltaTime * moveDirection);
+    }
+
+    private void MovementFalling()
+    {
+        speedDropOffTimer += Time.deltaTime;
+        float tempSpeed = 0.0f;
+
+        if (speedDropOffTimer < speedDropOffTimerMax)
+        {
+            tempSpeed = Mathf.Lerp(storedSpeed, 0, speedDropOffTimer / speedDropOffTimerMax);
+        }
+
+        Vector3 tempStoredInput = storedInput * tempSpeed;
+
+        tempStoredInput.y = fallingVelocity;
+
+        controller.Move(Time.deltaTime * tempStoredInput);
     }
 
     private void SetSpeed()
