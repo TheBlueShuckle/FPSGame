@@ -40,6 +40,15 @@ public class Damageable : MonoBehaviour
         }
 
         isKillable = false;
-        Destroy(transform.parent.gameObject);
+
+        if (transform.parent != null)
+        {
+            Destroy(transform.parent.gameObject);
+        }
+
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
