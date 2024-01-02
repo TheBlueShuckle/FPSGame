@@ -19,4 +19,9 @@ public static class EnemyCounter
     {
         return enemies;
     }
+
+    public static void ResetCounter()
+    {
+        enemies = 0;
+    }
 }

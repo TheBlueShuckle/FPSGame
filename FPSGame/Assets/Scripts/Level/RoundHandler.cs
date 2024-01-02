@@ -17,7 +17,6 @@ public class RoundHandler : MonoBehaviour
 
     public int CurrentRound { get => currentRound; }
 
-    private int[] zombiesPerRound;
     private int[] zombiesPerSpawner = new int[0];
 
     private int currentRound = 0;
@@ -26,6 +25,15 @@ public class RoundHandler : MonoBehaviour
     private Timer graceTimer;
     private Timer spawnTimer;
 
+    private void Awake()
+    {
+        currentRound = 0;
+        currentSpawner = 0;
+        graceTimer = null;
+        spawnTimer = null;
+        EnemyCounter.ResetCounter();
+    }
+
     private void Update()
     {
         graceTimer?.Update(Time.deltaTime);
@@ -33,7 +41,7 @@ public class RoundHandler : MonoBehaviour
 
         if (EnemyCounter.GetEnemyCount() <= 0 && zombiesPerSpawner.Sum() <= 0)
         {
-            if(graceTimer == null)
+            if (graceTimer == null && currentRound > 0)
             {
                 print("round won");
             }
