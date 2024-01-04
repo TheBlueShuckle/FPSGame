@@ -18,6 +18,7 @@ public class RecoilHandler : MonoBehaviour
             float snappiness = properties.snappiness;
 
             targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
+            print(targetRotation);
             currentRotation = Vector3.Slerp(currentRotation, targetRotation, snappiness * Time.fixedDeltaTime);
             transform.localRotation = Quaternion.Euler(currentRotation);
         }
