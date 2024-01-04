@@ -2172,7 +2172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isKillable: 1
   maxHealth: 100
-  hitEffect: {fileID: 100014, guid: 5332791ebce075d4a9e56f4581e7fb47, type: 3}
+  hitEffect: {fileID: 1709557247101132934, guid: 811aeddc3aef92241aec8e4a18ce3eca, type: 3}
 --- !u!1 &8038112234520726065
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,9 +16,10 @@ GameObject:
   - component: {fileID: 202778840152106859}
   - component: {fileID: 202778840152106858}
   - component: {fileID: -8529817233470323490}
+  - component: {fileID: -6349774451685601122}
   m_Layer: 9
   m_Name: NerfGun
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -162,6 +163,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothness: 8
   swayMultiplier: 2
+--- !u!114 &-6349774451685601122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202778840152106857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a7fee0b2af72074792a9e40e825e40f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recoilX: 0
+  recoilY: 0
+  recoilZ: 0
+  snappiness: 0
+  returnSpeed: 0
 --- !u!1 &568560593993072544
 GameObject:
   m_ObjectHideFlags: 0

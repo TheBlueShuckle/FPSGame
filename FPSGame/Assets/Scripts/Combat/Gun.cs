@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor.U2D;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
@@ -19,6 +20,7 @@ public class Gun : MonoBehaviour
     [SerializeField] GameObject muzzleFlash;
 
     CameraShake cameraShake;
+    RecoilHandler recoil;
 
     private int currentAmmo;
     private int damageMax;
@@ -41,7 +43,10 @@ public class Gun : MonoBehaviour
     private void Awake()
     {
         cam = GameObject.Find("PlayerCamera").transform;
+
         cameraShake = cam.GetComponent<CameraShake>();
+        recoil = GameObject.Find("CameraRecoil").GetComponent<RecoilHandler>();
+        print(recoil != null);
 
         fireRate = ConvertRPMtoSeconds(gunData.roundsPerMinute);
         reloadSpeed = gunData.reloadTime;
@@ -103,7 +108,8 @@ public class Gun : MonoBehaviour
     public void Shoot()
     {
         currentAmmo--;
-        StartCoroutine(cameraShake.Shake(gunData.shakeDurationSeconds, gunData.shakeMagnitude));
+        //StartCoroutine(cameraShake.Shake(gunData.shakeDurationSeconds, gunData.shakeMagnitude));
+        recoil.Recoil();
 
         GameObject muzzleFlashGO = Instantiate(muzzleFlash, muzzleFlashHolder.transform.position, cam.rotation);
         muzzleFlashGO.transform.parent = muzzleFlashHolder.transform;
