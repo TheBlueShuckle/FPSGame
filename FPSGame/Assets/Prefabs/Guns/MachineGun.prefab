@@ -209,8 +209,8 @@ MonoBehaviour:
   recoilX: -7
   recoilY: 3
   recoilZ: 0.45
-  snappiness: 6
-  returnSpeed: 5
+  snappiness: 5
+  returnSpeed: 1
 --- !u!1001 &1518474999295518007
 PrefabInstance:
   m_ObjectHideFlags: 0

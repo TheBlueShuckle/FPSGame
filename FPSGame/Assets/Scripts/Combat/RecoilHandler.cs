@@ -9,6 +9,7 @@ public class RecoilHandler : MonoBehaviour
     private Vector3 targetRotation;
 
     private RecoilProperties properties;
+    [SerializeField] private Camera cam;
 
     void Update()
     {
@@ -18,7 +19,6 @@ public class RecoilHandler : MonoBehaviour
             float snappiness = properties.snappiness;
 
             targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
-            print(targetRotation);
             currentRotation = Vector3.Slerp(currentRotation, targetRotation, snappiness * Time.fixedDeltaTime);
             transform.localRotation = Quaternion.Euler(currentRotation);
         }

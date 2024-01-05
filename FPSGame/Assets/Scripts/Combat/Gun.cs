@@ -214,7 +214,7 @@ public class Gun : MonoBehaviour
 
     public void IsMoving(Vector2 input)
     {
-        if(input.x != 0 || input.y != 0)
+        if (input.x != 0 || input.y != 0)
         {
             isRunning = true;
         }
