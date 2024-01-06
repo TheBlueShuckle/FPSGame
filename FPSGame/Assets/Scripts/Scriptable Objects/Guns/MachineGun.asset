@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MachineGun
   m_EditorClassIdentifier: 
   roundsPerMinute: 450
-  spread: 0.02
+  spread: 0
   reloadTime: 3
   magSize: 62
   bulletsPerTap: 1

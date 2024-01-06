@@ -135,6 +135,7 @@ public class InputManager : MonoBehaviour
             if (fireCoroutine != null)
             {
                 StopCoroutine(fireCoroutine);
+                gun.IsShooting = false;
             }
         }
     }

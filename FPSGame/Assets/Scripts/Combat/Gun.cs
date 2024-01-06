@@ -31,6 +31,10 @@ public class Gun : MonoBehaviour
 
     private bool isReloading = false;
     private bool isRunning = false;
+    public bool IsShooting
+    {
+        get; set;
+    }
 
     private float fireRate;
     private float reloadSpeed;
@@ -158,6 +162,7 @@ public class Gun : MonoBehaviour
             {
                 while (CanShoot())
                 {
+                    IsShooting = true;
                     yield return rapidFireWait;
                     Shoot();
                 }
