@@ -49,7 +49,7 @@ public class Gun : MonoBehaviour
         cam = GameObject.Find("PlayerCamera").transform;
 
         cameraShake = cam.GetComponent<CameraShake>();
-        recoil = GameObject.Find("CameraRecoil").GetComponent<RecoilHandler>();
+        recoil = cam.GetComponent<RecoilHandler>();
         print(recoil != null);
 
         fireRate = ConvertRPMtoSeconds(gunData.roundsPerMinute);
