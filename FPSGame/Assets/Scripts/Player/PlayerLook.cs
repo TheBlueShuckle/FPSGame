@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 public class PlayerLook : MonoBehaviour
 {
     public Camera cam;
+    public RecoilHandler recoil;
     private float xRotation = 0f;
 
     public float xSensitivity = 30f;
@@ -20,15 +18,33 @@ public class PlayerLook : MonoBehaviour
     public void ProcessLook(Vector2 input)
     {
         // magic numbers solves everything!
-        Vector2 magicFix = input * 0.5f * 0.1f;
+        Vector2 magicFix = input * 0.05f;
+        Vector3 recoilVector = recoil.ApplyRecoil();
 
         float mouseX = magicFix.x;
         float mouseY = magicFix.y;
 
-        xRotation -= (mouseY) * ySensitivity;
-        xRotation = Mathf.Clamp(xRotation, -90, 90);
+        xRotation -= mouseY * ySensitivity;
 
-        cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-        transform.Rotate(Vector3.up * (mouseX) * xSensitivity);
+        // incase you're looking down while shooting and xRotation is capped so you can't look down.
+        if (Mathf.Clamp(xRotation, -90, 90) == 90 && recoilVector.x < 0)
+        {
+            float maxClamp = 90 - recoilVector.x;
+            xRotation = Mathf.Clamp(xRotation, -90, maxClamp);
+        }
+
+        else
+        {
+            xRotation = Mathf.Clamp(xRotation, -90, 90);
+        }
+
+        if (xRotation + recoilVector.x < -90)
+        {
+            recoilVector.x = 0;
+            xRotation = -90;
+        }
+
+        cam.transform.localEulerAngles = new Vector3(xRotation, 0, 0) + recoilVector;
+        transform.Rotate(mouseX * xSensitivity * Vector3.up);
     }
 }

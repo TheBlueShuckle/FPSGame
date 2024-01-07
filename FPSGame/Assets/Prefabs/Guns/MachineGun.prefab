@@ -206,10 +206,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a7fee0b2af72074792a9e40e825e40f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recoilX: -7
-  recoilY: 3
-  recoilZ: 0.45
-  snappiness: 5
+  recoilX: -2
+  recoilY: 1
+  recoilZ: 0
+  snappiness: 30
   returnSpeed: 5
 --- !u!1001 &1518474999295518007
 PrefabInstance:

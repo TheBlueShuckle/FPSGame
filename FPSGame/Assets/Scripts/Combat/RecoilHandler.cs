@@ -11,15 +11,13 @@ public class RecoilHandler : MonoBehaviour
     private RecoilProperties properties;
     private Gun gun;
 
-    [SerializeField] Camera cam;
-
     private void Awake()
     {
         SetProperties();
         gun = properties.transform.GetComponent<Gun>();
     }
 
-    void Update()
+    public Vector3 ApplyRecoil()
     {
         if (properties != null)
         {
@@ -29,11 +27,19 @@ public class RecoilHandler : MonoBehaviour
             if (!gun.IsShooting)
             {
                 targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
+
+                if (targetRotation.Round(0) == Vector3.zero)
+                {
+                    targetRotation = Vector3.zero;
+                }
             }
 
             currentRotation = Vector3.Slerp(currentRotation, targetRotation, snappiness * Time.fixedDeltaTime);
 
-            transform.localRotation = Quaternion.Euler(currentRotation);
+            if(currentRotation.x > -0.1)
+            {
+                currentRotation = Vector3.zero;
+            }
         }
 
         if (properties == null || !properties.transform.IsChildOf(transform))
@@ -45,26 +51,8 @@ public class RecoilHandler : MonoBehaviour
         {
             gun = properties.transform.GetComponent<Gun>();
         }
-    }
 
-    private float GetAjdustedAngles(float angle)
-    {
-        if (angle > 180)
-        {
-            angle -= 360;
-        }
-
-        return angle;
-    }
-
-    private float burrh(float value)
-    {
-        if (value > 0)
-        {
-            return -90 + value;
-        }
-
-        return -90 - value;
+        return currentRotation;
     }
 
     private void SetProperties()
@@ -89,21 +77,5 @@ public class RecoilHandler : MonoBehaviour
         float recoilZ = Random.Range(-properties.recoilZ, properties.recoilZ);
 
         targetRotation += new Vector3(recoilX, recoilY, recoilZ);
-
-        float targetXAngle = GetAjdustedAngles(Quaternion.Euler(targetRotation).eulerAngles.x);
-        float cameraXAngle = GetAjdustedAngles(cam.transform.localRotation.eulerAngles.x);
-
-        //print($"Transform angle: {targetXAngle}, camera angle: {cameraXAngle}");
-
-        if (cameraXAngle + targetXAngle < -90)
-        {
-            targetRotation.x = -90 - cameraXAngle;
-            print("set targetRotation.x to " + targetRotation.x);
-        }
-
-        if (targetXAngle > -1f)
-        {
-            targetRotation.x = 0;
-        }
     }
 }
