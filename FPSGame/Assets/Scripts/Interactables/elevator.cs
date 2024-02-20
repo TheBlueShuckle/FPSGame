@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 
-public class elevator : MonoBehaviour
+public class Elevator : MonoBehaviour
 {
     [SerializeField] Transform wayPointTop;
     [SerializeField] Transform wayPointBottom;
