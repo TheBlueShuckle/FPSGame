@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 
-public class Elevator : MonoBehaviour
+public class ElevatorHandler : MonoBehaviour
 {
     [SerializeField] Transform wayPointTop;
     [SerializeField] Transform wayPointBottom;
     [SerializeField] float speed;
 
-    bool isAtTop;
-    bool isMoving;
+    public bool IsAtTop {  get; private set; }
+    public bool IsMoving { get; private set; }
     float currentSpeed;
 
     Vector3 startPos, stopPos;
 
     private void Update()
     {
-        if (isMoving)
+        if (IsMoving)
         {
             Move(startPos, stopPos);
         }
@@ -25,7 +25,7 @@ public class Elevator : MonoBehaviour
 
     public void StartElevator()
     {
-        if (isAtTop)
+        if (IsAtTop)
         {
             startPos = wayPointTop.position;
             stopPos = wayPointBottom.position;
@@ -39,7 +39,7 @@ public class Elevator : MonoBehaviour
             currentSpeed = speed;
         }
 
-        isMoving = true;
+        IsMoving = true;
     }
 
     private void Move(Vector3 startPos, Vector3 stopPos)
@@ -52,8 +52,8 @@ public class Elevator : MonoBehaviour
             if (position.y <= stopPos.y)
             {
                 position.y = stopPos.y;
-                isMoving = false;
-                isAtTop = false;
+                IsMoving = false;
+                IsAtTop = false;
             }
         }
 
@@ -62,8 +62,8 @@ public class Elevator : MonoBehaviour
             if (position.y >= stopPos.y)
             {
                 position.y = stopPos.y;
-                isMoving = false;
-                isAtTop = true;
+                IsMoving = false;
+                IsAtTop = true;
             }
         }
 
