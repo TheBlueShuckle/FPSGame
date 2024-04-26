@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c89d26974ef35d64c8ce6c922171db99, type: 3}
+  m_Name: Handgun
+  m_EditorClassIdentifier: 
+  roundsPerMinute: 180
+  spread: 0
+  reloadTime: 1
+  magSize: 8
+  bulletsPerTap: 1
+  rapidFire: 0
+  damageMax: 15
+  damageMin: 3
+  damageDropOffStart: 20
+  damageDropOffEnd: 50
+  rangeMax: 70
+  shakeDurationSeconds: 0
+  shakeMagnitude: 0
