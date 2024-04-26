@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Queen of Clubs
   description: 
-  icon: {fileID: 21300000, guid: fe80132212c6c9344bdf25b55cd78f74, type: 3}
+  icon: {fileID: 21300000, guid: 8bc2a2e31ae785649be1c68424db2972, type: 3}
   isEquipped: 0
   isUnlocked: 0
   cardType: 0

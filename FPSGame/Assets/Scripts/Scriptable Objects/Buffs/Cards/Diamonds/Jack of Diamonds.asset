@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Jack of Diamonds
   description: 
-  icon: {fileID: 21300000, guid: 8aaacd5a70a3de94a93d024961327dc4, type: 3}
+  icon: {fileID: 21300000, guid: 3c72e47132fb0614a9ba3e6493a3222e, type: 3}
   isEquipped: 0
   isUnlocked: 0
   cardType: 0
