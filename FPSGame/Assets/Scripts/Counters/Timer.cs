@@ -26,4 +26,9 @@ public class Timer
     {
         return duration - currentTime;
     }
+
+    public float GetCurrentTime()
+    {
+        return currentTime;
+    }
 }
