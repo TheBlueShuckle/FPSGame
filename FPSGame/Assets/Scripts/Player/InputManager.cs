@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour
 {
     private PlayerControls playerControls;
     private PlayerControls.OnFootActions onFoot;
     private PlayerControls.InInventoryActions inInventory;
+    private PlayerControls.MasterInputActions masterInputs;
 
     [SerializeField] private InventoryManager inventoryManager;
 
@@ -37,6 +39,7 @@ public class InputManager : MonoBehaviour
         playerControls = new PlayerControls();
         onFoot = playerControls.OnFoot;
         inInventory = playerControls.InInventory;
+        masterInputs = playerControls.MasterInput;
 
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
@@ -58,6 +61,11 @@ public class InputManager : MonoBehaviour
         onFoot.OpenInventory.performed += ctx => inventoryManager.OpenInventory();
 
         inInventory.Escape.performed += ctx => inventoryManager.CloseInventory();
+
+        masterInputs.ResetLevel.performed += ctx =>
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        };
     }
 
     void Update()
@@ -93,6 +101,7 @@ public class InputManager : MonoBehaviour
     private void OnEnable()
     {
         playerControls.Enable();
+        masterInputs.Enable();
 
         onFoot.OpenInventory.performed += SwitchToInMenu;
         inInventory.Escape.performed += SwitchToOnFoot;

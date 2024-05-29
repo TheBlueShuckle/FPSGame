@@ -16,7 +16,7 @@ MonoBehaviour:
   regenSpeed: 5
   defaultMovementSpeed: 5
   crouchSpeed: 1.5
-  sprintSpeed: 10
+  sprintSpeed: 12
   slideSpeed: 15
   jumpHeight: 0.75
   reloadSpeedMultiplier: 1

@@ -1,10 +1,4 @@
-using System;
-using System.Runtime.CompilerServices;
-using Unity.PlasticSCM.Editor.WebApi;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerMotor : MonoBehaviour
 {
@@ -38,13 +32,13 @@ public class PlayerMotor : MonoBehaviour
     public bool IsGrounded { get; private set; }
     public bool IsCrouched { get; private set; }
     public bool IsSprinting { get; private set; }
-    public bool isSliding { get; private set; }
+    public bool IsSliding { get; private set; }
 
 
     void Awake()
     {
         controller = GetComponent<CharacterController>();
-        isSliding = false;
+        IsSliding = false;
     }
 
     void Update()
@@ -52,7 +46,7 @@ public class PlayerMotor : MonoBehaviour
         IsGrounded = controller.isGrounded;
         SetSpeed();
 
-        if (lerpCrouch && !isSliding)
+        if (lerpCrouch && !IsSliding)
         {
             crouchTimer += Time.deltaTime;
             float p = crouchTimer / 1;
@@ -75,7 +69,7 @@ public class PlayerMotor : MonoBehaviour
             }
         }
 
-        if (isSliding)
+        if (IsSliding)
         {
             float tempHeight = controller.height;
             slideTimer += Time.deltaTime;
@@ -100,7 +94,7 @@ public class PlayerMotor : MonoBehaviour
 
             if (slideTimer > slideTimerMax || !controller.isGrounded)
             {
-                isSliding = false;
+                IsSliding = false;
             }
         }
     }
@@ -125,7 +119,7 @@ public class PlayerMotor : MonoBehaviour
             speedDropOffTimerMax = Mathf.Sqrt(storedSpeed);
         }
 
-        if (jumpButtonPressed && controller.isGrounded && !isSliding)
+        if (jumpButtonPressed && controller.isGrounded && !IsSliding)
         {
             Jump();
         }
@@ -139,7 +133,7 @@ public class PlayerMotor : MonoBehaviour
             fallingVelocity = -2.0f;
         }
 
-        if (isSliding)
+        if (IsSliding)
         {
             MovementSliding();
         }
@@ -196,7 +190,7 @@ public class PlayerMotor : MonoBehaviour
 
     private void SetSpeed()
     {
-        if (isSliding)
+        if (IsSliding)
         {
             float slideSpeed = statData.stats[StatType.SlideSpeed].Value;
             speed = slideSpeed;
@@ -245,7 +239,7 @@ public class PlayerMotor : MonoBehaviour
 
     private void Slide()
     {
-        isSliding = true;
+        IsSliding = true;
         IsSprinting = false;
 
         float slideSpeed = statData.stats[StatType.SlideSpeed].Value;

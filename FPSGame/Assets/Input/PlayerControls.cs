@@ -948,6 +948,34 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""MasterInput"",
+            ""id"": ""c84cb449-4265-46fa-9a42-c1810dee5a82"",
+            ""actions"": [
+                {
+                    ""name"": ""ResetLevel"",
+                    ""type"": ""Button"",
+                    ""id"": ""66b5532d-3088-4f14-aa42-f1da6d4aafa6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""336f9b78-645f-4535-96f6-2a39e523d996"",
+                    ""path"": ""<Keyboard>/f5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ResetLevel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -980,6 +1008,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // MasterInput
+        m_MasterInput = asset.FindActionMap("MasterInput", throwIfNotFound: true);
+        m_MasterInput_ResetLevel = m_MasterInput.FindAction("ResetLevel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1327,6 +1358,52 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // MasterInput
+    private readonly InputActionMap m_MasterInput;
+    private List<IMasterInputActions> m_MasterInputActionsCallbackInterfaces = new List<IMasterInputActions>();
+    private readonly InputAction m_MasterInput_ResetLevel;
+    public struct MasterInputActions
+    {
+        private @PlayerControls m_Wrapper;
+        public MasterInputActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ResetLevel => m_Wrapper.m_MasterInput_ResetLevel;
+        public InputActionMap Get() { return m_Wrapper.m_MasterInput; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MasterInputActions set) { return set.Get(); }
+        public void AddCallbacks(IMasterInputActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MasterInputActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MasterInputActionsCallbackInterfaces.Add(instance);
+            @ResetLevel.started += instance.OnResetLevel;
+            @ResetLevel.performed += instance.OnResetLevel;
+            @ResetLevel.canceled += instance.OnResetLevel;
+        }
+
+        private void UnregisterCallbacks(IMasterInputActions instance)
+        {
+            @ResetLevel.started -= instance.OnResetLevel;
+            @ResetLevel.performed -= instance.OnResetLevel;
+            @ResetLevel.canceled -= instance.OnResetLevel;
+        }
+
+        public void RemoveCallbacks(IMasterInputActions instance)
+        {
+            if (m_Wrapper.m_MasterInputActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMasterInputActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MasterInputActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MasterInputActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MasterInputActions @MasterInput => new MasterInputActions(this);
     public interface IOnFootActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -1357,5 +1434,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    public interface IMasterInputActions
+    {
+        void OnResetLevel(InputAction.CallbackContext context);
     }
 }

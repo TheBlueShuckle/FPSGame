@@ -926,6 +926,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "MasterInput",
+            "id": "c84cb449-4265-46fa-9a42-c1810dee5a82",
+            "actions": [
+                {
+                    "name": "ResetLevel",
+                    "type": "Button",
+                    "id": "66b5532d-3088-4f14-aa42-f1da6d4aafa6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "336f9b78-645f-4535-96f6-2a39e523d996",
+                    "path": "<Keyboard>/f5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResetLevel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

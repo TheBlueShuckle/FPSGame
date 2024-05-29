@@ -14,7 +14,39 @@ public class RecoilHandler : MonoBehaviour
     private void Awake()
     {
         SetProperties();
-        gun = properties.transform.GetComponent<Gun>();
+
+        if (properties != null )
+        {
+            gun = properties.transform.GetComponent<Gun>();
+        }
+    }
+
+    private void Update()
+    {
+        if (properties == null)
+        {
+            SetProperties();
+
+            if (properties != null)
+            {
+                gun = properties.transform.GetComponent<Gun>();
+            }
+        }
+    }
+
+    private void SetProperties()
+    {
+        properties = null;
+
+        foreach (GameObject weapon in GameObject.FindGameObjectsWithTag("Weapon"))
+        {
+            if (weapon.transform.IsChildOf(transform))
+            {
+                properties = weapon.GetComponent<RecoilProperties>();
+                print("Got the properties from " + properties.transform.name);
+                break;
+            }
+        }
     }
 
     public Vector3 ApplyRecoil()
@@ -53,21 +85,6 @@ public class RecoilHandler : MonoBehaviour
         }
 
         return currentRotation;
-    }
-
-    private void SetProperties()
-    {
-        properties = null;
-
-        foreach (GameObject weapon in GameObject.FindGameObjectsWithTag("Weapon"))
-        {
-            if (weapon.transform.IsChildOf(transform))
-            {
-                properties = weapon.GetComponent<RecoilProperties>();
-                print("Got the properties from " + properties.transform.name);
-                break;
-            }
-        }
     }
 
     public void Recoil()

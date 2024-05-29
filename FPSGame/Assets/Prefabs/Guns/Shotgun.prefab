@@ -111,7 +111,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5862927808791693355}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c433960f4ab93a40b92a6826d24b059, type: 3}
   m_Name: 
@@ -170,7 +170,7 @@ MonoBehaviour:
   pickUpRange: 10
   dropForwardForce: 2
   dropUpwardForce: 2
-  equipped: 1
+  equipped: 0
 --- !u!114 &191005064
 MonoBehaviour:
   m_ObjectHideFlags: 0

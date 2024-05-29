@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Timeline;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class WeaponSway : MonoBehaviour
